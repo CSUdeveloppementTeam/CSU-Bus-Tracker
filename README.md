@@ -1,2 +1,2 @@
-# CSU-Bus-Tracker
-An about page for the CSU bus tracker app
+# csu bus tracker
+ An about page for the CSU bus tracker app
