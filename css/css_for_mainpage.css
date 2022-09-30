@@ -18,10 +18,14 @@ body{
     z-index: 2;
     overflow: hidden;
 }
-    .navigation_bar p{
+    .navigation_bar a{
         cursor: pointer;
+        text-decoration: none;
+        display: block;
+        color: black;
+        margin: 15px 0px;
     }
-    .navigation_bar p:hover{
+    .navigation_bar a:hover{
         color: orangered;
     }
     .close_button{
@@ -84,15 +88,14 @@ body{
         color: black;
     }
 
-#map_section > img{
+#map {
     height: 100vh;
     width: 100vw;
     top:0;
     left: 0;
-    position: fixed;
+    position: fixed !important;
     z-index: -3;
     object-fit: cover;
-    opacity: 0.5;
 }
 
 #floating_side_buttons{
@@ -106,6 +109,7 @@ body{
     bottom: 0;
     position: fixed;
     right: 0;
+    z-index: 100;
 }
 #user_distance_button{
     width: auto;

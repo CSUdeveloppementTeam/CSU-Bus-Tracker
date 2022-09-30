@@ -8,10 +8,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/stylesheet.css">
         <link rel="stylesheet" href="css/css_for_mainpage.css">
+        <script type="module" src='map/map_init.js'></script>
+        <style>
+            #map {
+                height: 100vh;
+            }
+        </style>
     </head>
     <body>
         <div id="invisible_close_overlay" onclick="open_and_close_navigation_bar()" style="display:none;"></div>
-        <div class="map_window_container">
+        <div class="map_window_container" >
             <!-- menu bar at the top-->
             <div class="menu_bar">
                 <!--Menu Button-->
@@ -28,64 +34,66 @@
             </div>
             
             <!--Google Map section-->
-            <section id="map_section">
-                <button id="user_distance_button" style="display:flex;" >
-                    <img src="img/icons/bus_icon.png">
-                        <span>--</span>
-                    <img src="img/icons/person_icon.png">
-                    <span>30</span>
-                    <span>m</span>
-                </button>
-
-
-                <div id="floating_side_buttons">
-
-                    <button id="show_distance">
-                        <img src="img/icons/bus_icon.png">
-                        <span>-</span>
-                        <img src="img/icons/person_icon.png">
-                    </button>
-                    <button id="my_location">
-                        <img src="img/icons/my_location_icon.png">
-                    </button>
-                    <button id="lock_unlock">
-                        <img src="img/icons/lock_unlock_icon.png">
-                    </button>
-                   
-                </div>
+            <div id="map">
                 
-
+                
+                
 
                 <!---------------------
                 -------
-                MAP API GOES HERE-->
+                MAP API GOES HERE
                 <img src="img/demo_map1.jpg">
 
 
-                <!--
+                
                     end of Map API
                 -->
 
 
 
-            </section>
-        </div>
+            </div>
+            <button id="user_distance_button" style="display:flex;" >
+                <img src="img/icons/bus_icon.png">
+                    <span>--</span>
+                <img src="img/icons/person_icon.png">
+                <span>30</span>
+                <span>m</span>
+            </button>
 
+
+            <div id="floating_side_buttons">
+
+                <button id="show_distance">
+                    <img src="img/icons/bus_icon.png">
+                    <span>-</span>
+                    <img src="img/icons/person_icon.png">
+                </button>
+                <button id="my_location">
+                    <img src="img/icons/my_location_icon.png">
+                </button>
+                <button id="lock_unlock">
+                    <img src="img/icons/lock_unlock_icon.png">
+                </button>
+               
+            </div>
+        </div>
         <!-- Navigation Bar on the Side-->
         <section class="navigation_bar" id="navigation_bar">
             <button class="close_button" onclick="open_and_close_navigation_bar();">X</button>
             <br>
             <br>
-            <p href="#">Home</p>
-            <p href="#">Account Detaits </p>
-            <p href="#">Logout</p>
-            <p href="#">Download the App</p>
+            <a href="index.html">Home</a>
+            <a href="https://google.com">Account Detaits </a>
+            <a href="#">Logout</a>
+            <a href="#">Download the App</a>
             <select class="language_selector">
                 <option>English</option>
                 <option>Turkish</option>
             </select>
             <img src="img/illustrations/settings.png">
         </section>
+
+        
 
     </body>
 
@@ -103,5 +111,8 @@
                 document.getElementById('invisible_close_overlay').style.display= "block";
             }
         }
+    </script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
     </script>
 </html>
