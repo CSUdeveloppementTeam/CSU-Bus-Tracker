@@ -27,27 +27,25 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 // const user = auth.currentUser;
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid;
-    console.log(`connected user: ${uid}`);
-    getUserInfo(db, 'azertyuiop');
-    busLocations();
-  } else {
-    // User is signed out
-    console.log(`Not connected user`);
-  }
-});
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     const uid = user.uid;
+//     console.log(`connected user: ${uid}`);
+//     getUserInfo(db, 'azertyuiop');
+//     busLocations();
+//   } else {
+//     // User is signed out
+//     console.log(`Not connected user`);
+//   }
+// });
 
-
-const addUserEvent = document.getElementById("addUserBtn");
-const signUpEvent = document.getElementById("signUpBtn");
-const signInEvent = document.getElementById("signInBtn");
-const signOutEvent = document.getElementById("signOutBtn");
-const emailVerficationBtnEvent = document.getElementById("emailVerficationBtn");
-// const busLocationsEvent =  document.getElementById("busLocationsBtn");
-
-addUserEvent.addEventListener('click', addUser);
+// const signUpEvent = document.getElementById("signUpBtn");
+// console.log(signUpEvent);
+const signInEvent = document.getElementById("login_btn");
+// console.log(signInEvent)
+// const signOutEvent = document.getElementById("signOutBtn");
+// console.log(signOutEvent);
+// const emailVerficationBtnEvent = document.getElementById("emailVerficationBtn");
 export function addUser() {
   const user = {
     "email": "shin@driver.csu.edu.tr",
@@ -59,37 +57,39 @@ export function addUser() {
 }
 
 //Change the click event into submit
-signUpEvent.addEventListener('click', (e) => {
-  // e.preventDefault();
-  signUpUser();
-});
+// signUpEvent.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   signUpUser();
+// });
 function signUpUser() {
   const user = {
-    "email": "shin@driver.csu.edu.tr",
-    "password": "123456",
+    "email": document.getElementById("user_email").value,
+    "password": document.getElementById("user_password").value,
   }
-  signUp(auth, user)
+  signUp(auth, user);
 }
 
-signInEvent.addEventListener('click', signInUser);
+// signInEvent.addEventListener('click', signInUser);
 function signInUser() {
+  console.log("signin");
   const user = {
-    "email": "shin@driver.csu.edu.tr",
-    "password": "123456",
+    "email": document.getElementById("user_email").value,
+    "password": document.getElementById("user_password").value,
   }
   signIn(auth, user);
 }
 
-emailVerficationBtnEvent.addEventListener('click', function () {
-  sendToUserEmailVerificationLink(auth);
-});
+// emailVerficationBtnEvent.addEventListener('click', function () {
+//   sendToUserEmailVerificationLink(auth);
+// });
 
-signOutEvent.addEventListener('click', function () {
-  signOutUser(auth)
-});
+// signOutEvent.addEventListener('click', function (e) {
+//   e.preventDefault();
+//   signOutUser(auth);
+// });
 
 function busLocations() {
-  // const busLocationsref = ref(db, 'busLocationsTest');
+  //const busLocationsref = ref(db, 'busLocationsTest');
   console.log('BusLocations is called');
    onValue(ref(db, 'busLocationsTest'), (snapshot) => {
     console.log("inside");

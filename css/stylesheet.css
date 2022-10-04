@@ -1,0 +1,97 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+
+body{
+    margin: auto;
+    position: center;
+    display: table;
+    background-color: rgb(241 249 255);
+    font-family:Arial, Helvetica, sans-serif;
+    padding: 30px 0px 30px 0px;
+    scroll-behavior: smooth;
+    
+}
+.container_div{
+    max-width: 700px;
+    display: grid;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 50px;
+    box-shadow: 0px 5px 18px #0f273538;
+}
+.appicon{
+    height: 100px;
+    width: auto;
+    display: block;
+    margin: auto;
+}
+h1{
+    color: rgb(72, 72, 72); text-align: center; font-size:large;
+}
+input[type=text],[type=password],[type=email]{
+        border: 2px solid blue; 
+        border-radius: 4px;
+        height: 30px;
+        width: 300px;
+        text-align: center;
+    }
+.login_button{
+    height: 50px;
+    width: auto;
+    background-color: #25247b;
+    color: white;
+    transition: .3s;
+    border-radius: 0px;
+    border: none;
+}
+.login_button:hover{
+    background-color: #DD4A15;
+    color: white;
+}
+.buttom_image{
+    position: fixed;
+    z-index: -2;
+    bottom: 0;
+    width: 100vw;
+    right: 0;
+}
+.language_selector{
+    height: 30px;
+    width: 120px;
+    padding: 3px;
+    border-color: grey;
+    display: block;
+    margin: auto;
+}
+.language_selector:focus-visible{
+    border-color: blue;
+}
+
+.auth_div{
+    background-color: rgb(167, 255, 208);
+    border-radius: 5px;
+    max-width: 274px;
+    padding: 10px;
+}
+.auth_div > *{
+    word-wrap: break-word;
+}
+
+.link_button{
+    height: 50px;
+    width: auto;
+    max-width: 300px;
+    background-color: blue;
+    color: white;
+    transition: .3s;
+    border-radius: 5px;
+    border: none;
+}
+.link_button:hover{
+    background-color: orange;
+    color: black;
+}
