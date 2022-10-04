@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo, writeUserInfo } from "./db_repository.js";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, onValue} from "firebase/database";
 import { sendToUserEmailVerificationLink, signIn, signOutUser, signUp } from "./auth.js";
 
 
@@ -32,6 +32,7 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
     console.log(`connected user: ${uid}`);
     getUserInfo(db, 'azertyuiop');
+    busLocations();
   } else {
     // User is signed out
     console.log(`Not connected user`);
@@ -87,9 +88,13 @@ signOutEvent.addEventListener('click', function () {
   signOutUser(auth)
 });
 
-// function busLocations() {
-//   // const busLocationsref = ref(db, 'busLocationsTest');
-//    onValue(ref(db, 'busLocationsTest'), (snapshot) => {
-//     print(snapshot);
-//   });
-// }
+function busLocations() {
+  // const busLocationsref = ref(db, 'busLocationsTest');
+  console.log('BusLocations is called');
+   onValue(ref(db, 'busLocationsTest'), (snapshot) => {
+    console.log("inside");
+    var loc = snapshot.val()
+    var data = JSON.stringify(loc);
+    console.log(data);
+  });
+}
