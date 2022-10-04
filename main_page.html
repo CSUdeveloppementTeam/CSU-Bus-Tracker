@@ -9,11 +9,6 @@
         <link rel="stylesheet" href="css/stylesheet.css">
         <link rel="stylesheet" href="css/css_for_mainpage.css">
         <script type="module" src='map/map_init.js'></script>
-        <style>
-            #map {
-                height: 100vh;
-            }
-        </style>
     </head>
     <body>
         <div id="invisible_close_overlay" onclick="open_and_close_navigation_bar()" style="display:none;"></div>
@@ -27,7 +22,7 @@
                     <div></div>
                 </div>
                 <!--Bus Selector-->
-                <select>
+                <select class="bus_selector" placeholder="No bus available">
                     <option>Bus 1</option>
                     <option>Bus 2</option>
                 </select>
@@ -68,10 +63,10 @@
                     <span>-</span>
                     <img src="img/icons/person_icon.png">
                 </button>
-                <button id="my_location">
+                <button id="my_location" class="student_location_button">
                     <img src="img/icons/my_location_icon.png">
                 </button>
-                <button id="lock_unlock">
+                <button id="lock_unlock" class="lock">
                     <img src="img/icons/lock_unlock_icon.png">
                 </button>
                
@@ -115,4 +110,5 @@
     <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
     </script>
+    <script src="map/lockBtn.js"></script>
 </html>

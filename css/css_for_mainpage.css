@@ -63,9 +63,11 @@ body{
     display: flex;
     gap: 30px;
     background: #e94409;
+    border: 1px solid white; 
     border-radius: 30px;
     padding: 10px 30px;
     margin-top: 26px;
+    
 }
 .menu_button{
     background: #e94409;
@@ -79,10 +81,12 @@ body{
     color: white;
 }
 .menu_bar > select{
-    background: none;
+    background: transparent;
     width: 80%;
-    color: white;
+    color: white; 
+    text-align: center;
     border: none;
+
 }
     .menu_bar > select > option{
         color: black;
@@ -179,3 +183,15 @@ body{
     display:inline;
 }
 
+.lock_panel {
+    height: 100%; 
+    background-color: transparent;
+    z-index: 10;
+    width: 100%;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+}
+.lock_panel.unlock {
+    display: none; 
+}

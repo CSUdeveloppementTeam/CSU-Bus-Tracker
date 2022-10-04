@@ -23,20 +23,20 @@
     <!-- signup div
     ======================================================-->
     <div class="signup_container">
-        <div class="signup_container_div">
+        <form class="signup_container_div" method="post" action="">
                 <img class="appicon" src="img/csu bus tracker.png">
                 <h1 >Sign up for your account</h1>
                 <br>
-                <input type="text" placeholder="Enter email">
+                <input type="text" placeholder="Enter username" id="username">
                 <br>
-                <input type="password" placeholder="Password">
+                <input type="email" placeholder="kius email address" id="user_email">
                 <br>
-                <input type="email" placeholder="kius email address">
+                <input type="password" placeholder="Password" id="user_password">
                 <br>
-                <button class="login_button" onclick="show_auth_message();">Register</button>
+                <button class="login_button" onclick="show_auth_message();" id="signup_btn">Register</button>
                 <br>
-                <a href="login.html">Login</a>
-        </div>
+                <span>already have an account ?<a href="login.html">Login</a></span>
+        </form>
 
 
         <!-- authentication message sent to spam
@@ -92,5 +92,6 @@
 
 
 </script>
+<script src="signup.js"></script>
 </body>
 </html>

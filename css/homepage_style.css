@@ -150,10 +150,6 @@ h1 {
 h2 {
     font-size: 22px; 
 }
-@media screen and (min-width: 450px)  {
-
-}
-
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
         text-align: left;
@@ -166,11 +162,20 @@ h2 {
     }
     .cover_section {
         flex-direction: row;
-        height: 80vh; 
+        height: 85vh; 
         width: 100%;
     }
     .cover_section div article {
         width: 50%;
+        text-align: left;
+    }
+    .cover_section div article h1 {
+        padding: 0; 
+        margin: 0; 
+    }
+    .open_web {
+        margin: 20px 15px 15px 0px !important; 
+        display: inline-block;
     }
     .hero_img {
         height: 100%;

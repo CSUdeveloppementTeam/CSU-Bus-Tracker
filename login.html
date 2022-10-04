@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/stylesheet.css">
 
 <style>
-    body{
+    body {
         background-image: url(img/illustrations/login_transparent.png);
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -20,21 +20,21 @@
     }
 </style>
 <body>   
-    <section class="container_div">
+    <form class="container_div" method="post" action=" ">
         <img class="appicon" src="img/csu bus tracker.png">
         <h1 >Login</h1>
         <br>
-        <input type="text" placeholder="Enter email">
+        <input type="email" placeholder="Enter email" id="user_email" required>
+        <br> 
+        <input type="password" placeholder="Password" id="user_password" required>
         <br>
-        <input type="password" placeholder="Password">
-        <br>
-        <button class="login_button">Login</button>
+        <button class="login_button" id="login_btn">Login</button>
         <hr>
         <a href="#">Forgot Password?</a>
         <br>
-        <a href="registration_page.html">Register</a>
+        <span>Your don't have an account ? <a href="registration_page.html">Signup</a></span>
 
-    </section>
+    </form>
     <footer>
         <br>
         <select class="language_selector">
@@ -42,5 +42,6 @@
             <option>Turkish</option>
         </select>
     </footer>
+    <script src="authentification.js" ></script>
 </body>
 </html>

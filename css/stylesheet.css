@@ -37,6 +37,7 @@ input[type=text],[type=password],[type=email]{
         border-radius: 4px;
         height: 30px;
         width: 300px;
+        text-align: center;
     }
 .login_button{
     height: 50px;
@@ -44,12 +45,12 @@ input[type=text],[type=password],[type=email]{
     background-color: #25247b;
     color: white;
     transition: .3s;
-    border-radius: 5px;
+    border-radius: 0px;
     border: none;
 }
 .login_button:hover{
-    background-color: orange;
-    color: black;
+    background-color: #DD4A15;
+    color: white;
 }
 .buttom_image{
     position: fixed;

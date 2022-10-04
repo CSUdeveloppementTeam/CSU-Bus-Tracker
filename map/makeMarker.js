@@ -1,4 +1,4 @@
-export function createMarker(marker_position, marker_icon) {
+export function createMarker(marker_position, marker_icon, map) {
     let marker = new google.maps.Marker({
         position: marker_position,
         map: map,
