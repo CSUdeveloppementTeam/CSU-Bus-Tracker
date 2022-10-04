@@ -59,22 +59,24 @@ export function addUser() {
 
 //Change the click event into submit
 signUpEvent.addEventListener('click', (e) => {
-  // e.preventDefault();
+  e.preventDefault();
   signUpUser();
 });
 function signUpUser() {
   const user = {
-    "email": "shin@driver.csu.edu.tr",
-    "password": "123456",
+    "email": document.getElementById("user_email").value,
+    "password": document.getElementById("user_password").value,
   }
-  signUp(auth, user)
+  signUp(auth, user);
 }
 
 signInEvent.addEventListener('click', signInUser);
-function signInUser() {
+function signInUser(e) {
+  e.preventDefault(); 
+  console.log("signin");
   const user = {
-    "email": "shin@driver.csu.edu.tr",
-    "password": "123456",
+    "email": document.getElementById("user_email").value,
+    "password": document.getElementById("user_password").value,
   }
   signIn(auth, user);
 }
@@ -83,8 +85,9 @@ emailVerficationBtnEvent.addEventListener('click', function () {
   sendToUserEmailVerificationLink(auth);
 });
 
-signOutEvent.addEventListener('click', function () {
-  signOutUser(auth)
+signOutEvent.addEventListener('click', function (e) {
+  e.preventDefault();
+  signOutUser(auth);
 });
 
 // function busLocations() {

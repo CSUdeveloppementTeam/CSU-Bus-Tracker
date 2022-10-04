@@ -27,13 +27,13 @@
                 <img class="appicon" src="img/csu bus tracker.png">
                 <h1 >Sign up for your account</h1>
                 <br>
-                <input type="text" placeholder="Enter username" id="username">
+                <input type="text" placeholder="Enter username" id="username" required>
                 <br>
-                <input type="email" placeholder="kius email address" id="user_email">
+                <input type="email" placeholder="kius email address" id="user_email" required>
                 <br>
-                <input type="password" placeholder="Password" id="user_password">
+                <input type="password" placeholder="Password" id="user_password" required>
                 <br>
-                <button class="login_button" onclick="show_auth_message();" id="signup_btn">Register</button>
+                <button class="login_button" onclick="" id="signUpBtn">Register</button>
                 <br>
                 <span>already have an account ?<a href="login.html">Login</a></span>
         </form>
@@ -62,7 +62,7 @@
             <img src="img/auth_tutorial/8.png">
         </div>
         <br>
-        <button class="link_button" onclick=" window.open('http://outlook.com','_blank')" style="width: 300px; margin:auto; display:block;">Go to Mail (Outlook.com)</button>
+        <button class="link_button" onclick='window.open("https:\/\/outlook.com","_blank")' style="width: 300px; margin:auto; display:block;">Go to Mail (Outlook.com)</button>
     </div> 
 
 
@@ -77,21 +77,6 @@
         </select>
     </footer>
 
-<script>
-
-    // view the authentication tutorial section
-    ///////////////////////////////////////////
-    function show_auth_message(){
-        document.getElementById("auth_message").style.display = 'grid';
-        document.getElementById("auth_tutorial").style.display = "block";
-
-        setTimeout(function(){
-            document.getElementById('auth_message').scrollIntoView();
-        }, 500);   
-    }
-
-
-</script>
-<script src="signup.js"></script>
+<script src="src/index.js"></script>
 </body>
 </html>
