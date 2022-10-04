@@ -7,7 +7,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/stylesheet.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/css_for_registration_page.css'>
-
+    <script type="text/javascript" src="dist/bundle.js" defer></script>
 </head>
 
 <style>
@@ -43,7 +43,7 @@
             go to Outlook.com-->
         <div class="auth_div" id="auth_message">
                 <p style="color: rgb(64, 64, 64)">A confirmation mail has been sent to your email. Check your inbox/spam folder</p>
-                <button class="link_button" onclick=" window.open('http://outlook.com','_blank')" >Go to Mail (Outlook.com)</button>
+                <button class="link_button" onclick=" window.open('http:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
         </div>
     </div>
     <br>
@@ -65,8 +65,6 @@
         <button class="link_button" onclick='window.open("https:\/\/outlook.com","_blank")' style="width: 300px; margin:auto; display:block;">Go to Mail (Outlook.com)</button>
     </div> 
 
-
-
     <!-- langauge selector
     ======================================================-->
     <footer>
@@ -76,7 +74,5 @@
             <option>Turkish</option>
         </select>
     </footer>
-
-<script src="src/index.js"></script>
 </body>
 </html>
