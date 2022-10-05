@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/stylesheet.css">
         <link rel="stylesheet" href="css/css_for_mainpage.css">
+        <script type="text/javascript" src="dist/bundle.js" async defer></script>
         <script type="module" src='map/map_init.js'></script>
     </head>
     <body>
@@ -79,8 +80,8 @@
             <br>
             <a href="index.html">Home</a>
             <a href="https://google.com">Account Detaits </a>
-            <a  id="signOutBtn">Logout</a>
-            <a href="#">Download the App</a>
+            <button id="signoutbtn" >Logout</button>
+            <a href="https://drive.google.com/file/d/1W2rKur2dMeFCVPtouQPpAWvyQciphb_U/view?usp=sharing">Download the App</a>
             <select class="language_selector">
                 <option>English</option>
                 <option>Turkish</option>
@@ -101,14 +102,13 @@
                 document.getElementById("navigation_bar").style.marginLeft = "-390px";
                 document.getElementById('invisible_close_overlay').style.display= "none";
             }
-            else{
+            else{   
                 document.getElementById("navigation_bar").style.marginLeft = "0px";
                 document.getElementById('invisible_close_overlay').style.display= "block";
             }
         }
     </script>
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
     </script>
     <script src="map/lockBtn.js"></script>
 </html>

@@ -3,8 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo, writeUserInfo } from "./db_repository.js";
 import { getDatabase, ref, onValue} from "firebase/database";
-import { sendToUserEmailVerificationLink, signIn, signOutUser, signUp } from "./auth.js";
-
+import { sendToUserEmailVerificationLink, signIn, signOutUser, signUp, userCredentials } from "./auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,40 +26,59 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 // const user = auth.currentUser;
 
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     const uid = user.uid;
-//     console.log(`connected user: ${uid}`);
-//     getUserInfo(db, 'azertyuiop');
-//     busLocations();
-//   } else {
-//     // User is signed out
-//     console.log(`Not connected user`);
-//   }
-// });
-
-// const signUpEvent = document.getElementById("signUpBtn");
-// console.log(signUpEvent);
-const signInEvent = document.getElementById("login_btn");
-// console.log(signInEvent)
-// const signOutEvent = document.getElementById("signOutBtn");
-// console.log(signOutEvent);
-// const emailVerficationBtnEvent = document.getElementById("emailVerficationBtn");
-export function addUser() {
-  const user = {
-    "email": "shin@driver.csu.edu.tr",
-    "name": "shin",
-    "creationDate": "30/09/2022",
-    "key": 'azertyuiop' //`${userCredentials.user.uid}`
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    console.log(`connected user: ${uid}`);
+    getUserInfo(db, 'azertyuiop');
+    busLocations();
+  } else {
+    // User is signed out
+    console.log(`Not connected user`);
+    // location.replace("../login.html"); 
   }
-  writeUserInfo(db, user);
-}
+});
+
+// console.log(signUpEvent);
+// console.log(signInEvent)
+// const emailVerficationBtnEvent = document.getElementById("emailVerficationBtn");
 
 //Change the click event into submit
-// signUpEvent.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   signUpUser();
-// });
+const signUpEvent = document.getElementById("signUpBtn");
+signUpEvent.addEventListener('click', (e) => {
+  e.preventDefault();
+  signUpUser();
+  sendToUserEmailVerificationLink(auth);
+  checkEmailVerification(); 
+});
+
+// repeated email verification check 
+function checkEmailVerification() {
+
+  document.getElementById("auth_message").style.display = 'grid';
+  document.getElementById("auth_tutorial").style.display = "block";
+
+  setTimeout(function(){
+      document.getElementById('auth_message').scrollIntoView();
+  }, 500);
+  setInterval(function () {
+    if (auth.currentUser.emailVerified) {
+      addUser(); 
+      location.replace("../main_page.html"); 
+    }
+  }, 2000);
+}
+
+// button to manually check the verified email 
+document.getElementById("check_verf_btn").addEventListener("click", function (e) {
+  console.log('check my verification');
+  if (auth.currentUser.emailVerified) {
+    addUser(); 
+    location.replace("../main_page.html"); 
+  }
+})
+
+
 function signUpUser() {
   const user = {
     "email": document.getElementById("user_email").value,
@@ -69,24 +87,36 @@ function signUpUser() {
   signUp(auth, user);
 }
 
-// signInEvent.addEventListener('click', signInUser);
-function signInUser() {
-  console.log("signin");
+export function addUser() {
+  const user = {
+    "email": userCredentials.user.email ,
+    "name": "shin",
+    "creationDate": "30/09/2022",
+    "key": userCredentials.user.uid //`${userCredentials.user.uid}`
+  }
+  writeUserInfo(db, user);
+}
+
+// Logout 
+const signOutEvent = document.getElementById("signoutbtn");
+console.log(signOutEvent);
+window.addEventListener("load", function () {
+  signOutEvent.addEventListener('click', () => {
+    signOutUser(auth);
+  });
+})
+
+//login 
+const signInEvent = document.getElementById("login_btn");
+signInEvent.addEventListener('click', function (e) {
+  e.preventDefault();
   const user = {
     "email": document.getElementById("user_email").value,
     "password": document.getElementById("user_password").value,
   }
   signIn(auth, user);
-}
+});
 
-// emailVerficationBtnEvent.addEventListener('click', function () {
-//   sendToUserEmailVerificationLink(auth);
-// });
-
-// signOutEvent.addEventListener('click', function (e) {
-//   e.preventDefault();
-//   signOutUser(auth);
-// });
 
 function busLocations() {
   //const busLocationsref = ref(db, 'busLocationsTest');
@@ -95,6 +125,7 @@ function busLocations() {
     console.log("inside");
     var loc = snapshot.val()
     var data = JSON.stringify(loc);
-    console.log(data);
+    console.log(loc);
   });
 }
+

@@ -2,7 +2,7 @@ let mapObj;
 import { createMarker } from "./makeMarker.js";
 import { displayStudentLocation } from "./currentLocation.js";
 import { animatedMove } from "./busMovement.js";
-function initMap() {
+export function initMap() {
     let options = {
         center: { lat:  35.323, lng: 33.314 },
         zoom: 15,
@@ -22,4 +22,5 @@ function initMap() {
     });
     
 }
+
 window.initMap = initMap;

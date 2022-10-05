@@ -24,6 +24,7 @@ export const signIn = (auth, { email, password }) => {
             // Signed in 
             const user = userCredential.user;
             console.log("user signed in successfully" + user);
+            location.replace("../main_page.html");
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -47,6 +48,7 @@ export const sendToUserEmailVerificationLink = (auth) => {
 export function signOutUser(auth) {
     signOut(auth).then(() => {
         console.log('Signed Out');
+        location.replace('../login.html');
     }).catch((error) => {
         console.error('Sign Out Error', error);
     });
