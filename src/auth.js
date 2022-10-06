@@ -4,7 +4,6 @@ import {
 } from "firebase/auth";
 import { writeUserInfo } from "./db_repository";
 
-
 let userDetails;
 export const signUp = (auth, user) => {
    const { email, password, name} = user;
@@ -85,3 +84,4 @@ export function updateUserPassword(auth, newPassword){
         console.error('Update Password Error', error);
       });
 }
+ 
