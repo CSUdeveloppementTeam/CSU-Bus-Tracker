@@ -138,6 +138,7 @@ function updateBusesMarkers(map, bus) {
     console.log("updating the bus markers");
     if (bus.busId in markers) {
       markers[bus.busId].setPosition(new google.maps.LatLng(bus.latitude, bus.longitude));
+      // animatedMarker(bus.latitude, bus.longitude, markers[bus.busId].lat, markers[bus.busId].lng, null, 10, markers[bus.busId]);
     } else {
       markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
       makeInfowindow(map, markers[bus.busId], bus.busId, bus.busLine);
@@ -188,34 +189,42 @@ function animateSelectedMarker(
 
         var lat = selectedBus.latitude;
         var lng = selectedBus.longitude;
-        // createMarker(new google.maps.LatLng(lat, lng), bus_marker_icon)
-        // var latlng; 
         
-    
-        var deltalat = (new_lat - lat) / 100;
-        var deltalng = (new_lng - lng) / 100;
-      
-        for (var i = 0; i < 100; i++) {
-          (function(ind) {
-            setTimeout(
-              function() {
-                lat = bus.latitude;
-                lng = bus.longitude;
-      
-                lat += deltalat;
-                lng += deltalng;
-                latlng = new google.maps.LatLng(lat, lng);
-                markers[selectedBus.busId].setPosition(latlng);
-              }, n * ind);
-          })(i)
-        }
-
+        animatedMarker (new_lat,
+          new_lng, lat, lng,
+          rotation,
+          bus,
+          n, markers[selectedBus.busId])
         // // updateSelectedBusCircle(latitude, longitude);
         // if (!isScreenLocked) {
         //   setIsScreenLocked(true);
         // }
       }
     }
+  }
+
+  function animatedMarker (new_lat,
+    new_lng,current_lat, current_lng,
+    rotation,
+    busObj,
+    n, busMarker) {
+        var deltalat = (new_lat - current_lat) / 100;
+        var deltalng = (new_lng - lng) / 100;
+      
+        for (var i = 0; i < 100; i++) {
+          (function(ind) {
+            setTimeout(
+              function() {
+                current_lat = busObj.latitude;
+                current_lng = busObj.longitude;
+      
+                current_lat += deltalat;
+                current_lng += deltalng;
+                latlng = new google.maps.LatLng(current_lat, current_lng);
+                busMarker.setPosition(latlng);
+              }, n * ind);
+          })(i)
+        }
   }
 
   function animateCameraPosition(position) {
