@@ -146,7 +146,7 @@ document.querySelector("#show_distance").addEventListener("click", function () {
   let distance;
   if (window.hasOwnProperty('selectedBus')) {
       getUserPosition(function () {
-        distance = calculateUserAndBusDistance();
+        distance = Math.round(calculateUserAndBusDistance());
         console.log("distance in meter = " + distance);
         if (distance == false) {
           document.getElementById("distance_display").innerHTML = ""; 
