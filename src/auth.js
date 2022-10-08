@@ -59,7 +59,7 @@ export const signIn = (auth, { email, password }) => {
             // Signed in 
             const user = userCredential.user;
             console.log("user signed in successfully" + user);
-            location.replace("../main_page.html")
+            location.replace("../main_page.html");
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -72,6 +72,7 @@ export const signIn = (auth, { email, password }) => {
 export function signOutUser(auth) {
     signOut(auth).then(() => {
         console.log('Signed Out');
+        location.replace('../login.html');
     }).catch((error) => {
         console.error('Sign Out Error', error);
     });
@@ -85,3 +86,19 @@ export function updateUserPassword(auth, newPassword){
       });
 }
  
+export function resetPassword(auth, email) {
+    var actionCodeSettings = {
+        url: 'https://csudeveloppementteam.github.io/CSU-Bus-Tracker/',
+      };
+      auth.sendPasswordResetEmail(
+        email, actionCodeSettings)
+        .then(function() {
+        // Password reset email sent.
+        console.log("the email has been sent succesfully !");
+        })
+        .catch(function(error) {
+        // Error occurred. Inspect error.code.
+        console.error('an eror occured !', error);
+        });
+    
+}

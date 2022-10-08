@@ -19,7 +19,7 @@
     }
 </style>
 <body>   
-    <form class="container_div" method="post" action=" ">
+    <div class="container_div" >
         <img class="appicon" src="img/csu bus tracker.png">
         <h1 >Login</h1>
         <br>
@@ -27,13 +27,13 @@
         <br> 
         <input type="password" placeholder="Password" id="user_password" required>
         <br>
-        <button class="login_button" id="login_btn">Login</button>
+        <button class="login_button" id="login_btn" onclick="login();">Login</button>
         <hr>
-        <a href="#">Forgot Password?</a>
+        <button  id="forgotten_pw" onclick="forgotten()">Forgot Password?</button>
         <br>
         <span>Your don't have an account ? <a href="registration_page.html">Signup</a></span>
 
-    </form>
+    </div>
     <footer>
         <br>
         <select class="language_selector">

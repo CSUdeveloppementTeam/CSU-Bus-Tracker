@@ -95,3 +95,37 @@ input[type=text],[type=password],[type=email]{
     background-color: orange;
     color: black;
 }
+#overlay {
+    height: 100vh;
+    width: 100%;  
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 99;
+    display: grid;
+    place-items: center;
+}
+#forgotten_form {
+    background-color: #fff;
+    margin: auto;
+    width: 50%;
+    padding: 40px 10px;
+    /* min-height: 60%;  */
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+#forgotten_form p {
+    width: 65%;
+    margin: 15px auto;
+}
+#forgotten_form input {
+    width: 65%;
+}
+.close_popup {
+    height: 20px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}

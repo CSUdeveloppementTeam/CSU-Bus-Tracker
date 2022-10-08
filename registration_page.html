@@ -23,7 +23,7 @@
     <!-- signup div
     ======================================================-->
     <div class="signup_container">
-        <form class="signup_container_div" method="post" action="">
+        <div class="signup_container_div" method="post" action="">
                 <img class="appicon" src="img/csu bus tracker.png">
                 <h1 >Sign up for your account</h1>
                 <br>
@@ -33,17 +33,17 @@
                 <br>
                 <input type="password" placeholder="Password" id="user_password" required>
                 <br>
-                <button class="login_button"  id="signUpBtn">Register</button>
+                <button class="login_button"  id="signUpBtn" onclick="userSignup()">Register</button>
                 <br>
                 <span>already have an account ?<a href="login.html">Login</a></span>
-        </form>
+        </div>
 
 
         <!-- authentication message sent to spam
             go to Outlook.com-->
         <div class="auth_div" id="auth_message">
                 <p style="color: rgb(64, 64, 64)">A confirmation mail has been sent to your email. Check your inbox/spam folder</p>
-                <button class="link_button" onclick=" window.open('http:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
+                <button class="link_button" onclick=" window.open('https:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
         </div>
     </div>
     <br>

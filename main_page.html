@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="css/stylesheet.css">
         <link rel="stylesheet" href="css/css_for_mainpage.css">
         <script type="text/javascript" src="dist/bundle.js" async defer></script>
-        <script type="module" src='map/map_init.js'></script>
     </head>
     <body>
         <div id="invisible_close_overlay" onclick="open_and_close_navigation_bar()" style="display:none;"></div>
@@ -52,8 +51,7 @@
                 <img src="img/icons/bus_icon.png">
                     <span>--</span>
                 <img src="img/icons/person_icon.png">
-                <span>30</span>
-                <span>m</span>
+                <span id="distance_display"></span>
             </button>
 
 
@@ -80,7 +78,7 @@
             <br>
             <a href="index.html">Home</a>
             <a href="https://google.com">Account Detaits </a>
-            <button id="signoutbtn" >Logout</button>
+            <button id="signoutbtn"  onclick="logout()">Logout</button>
             <a href="https://drive.google.com/file/d/1W2rKur2dMeFCVPtouQPpAWvyQciphb_U/view?usp=sharing">Download the App</a>
             <select class="language_selector">
                 <option>English</option>
@@ -110,5 +108,4 @@
     </script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
     </script>
-    <script src="map/lockBtn.js"></script>
 </html>

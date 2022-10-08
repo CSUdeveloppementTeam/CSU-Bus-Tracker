@@ -1,9 +1,11 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getUserInfo, writeUserInfo } from "./db_repository.js";
-import { getDatabase, ref, onValue} from "firebase/database";
-import { sendToUserEmailVerificationLink, signIn, signOutUser, signUp, userCredentials } from "./auth.js";
+import { getUserInfo} from "./db_repository.js";
+import { getDatabase} from "firebase/database";
+import { signIn, signOutUser, signUp, resetPassword } from "./auth.js";
+import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance} from "../map/map_controller.js";
+import { initMap } from "../map/map_init.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,106 +28,128 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 // const user = auth.currentUser;
 
+let wasAlreadyConnected = false;
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    const uid = user.uid;
-    console.log(`connected user: ${uid}`);
-    getUserInfo(db, 'azertyuiop');
-    busLocations();
-  } else {
-    // User is signed out
-    console.log(`Not connected user`);
-    // location.replace("../login.html"); 
-  }
-});
-
-// console.log(signUpEvent);
-// console.log(signInEvent)
-// const emailVerficationBtnEvent = document.getElementById("emailVerficationBtn");
-
-//Change the click event into submit
-const signUpEvent = document.getElementById("signUpBtn");
-signUpEvent.addEventListener('click', (e) => {
-  e.preventDefault();
-  signUpUser();
-  sendToUserEmailVerificationLink(auth);
-  checkEmailVerification(); 
-});
-
-// repeated email verification check 
-function checkEmailVerification() {
-
-  document.getElementById("auth_message").style.display = 'grid';
-  document.getElementById("auth_tutorial").style.display = "block";
-
-  setTimeout(function(){
-      document.getElementById('auth_message').scrollIntoView();
-  }, 500);
-  setInterval(function () {
-    if (auth.currentUser.emailVerified) {
-      addUser(); 
-      location.replace("../main_page.html"); 
+    console.log(`connected user: ${user.email}`);
+    getUserInfo(db, user.uid);
+    var fileName = location.href.split("/").pop();
+    if(fileName !== "main_page.html"){
+      location.replace("../main_page.html");
+    } else {
+      busLocations(db, window.mapObj);
     }
-  }, 2000);
-}
-
-// button to manually check the verified email 
-document.getElementById("check_verf_btn").addEventListener("click", function (e) {
-  console.log('check my verification');
-  if (auth.currentUser.emailVerified) {
-    addUser(); 
-    location.replace("../main_page.html"); 
+    wasAlreadyConnected = true;
+  } else {
+    console.log(`Not connected user`);
+    var fileName = location.href.split("/").pop();
+    console.log("file: "+fileName);
+    if(wasAlreadyConnected){
+      if(fileName !== "index.html"){
+        location.replace("../index.html");
+      }
+    }
   }
-})
+});
 
-
-function signUpUser() {
+function userSignup () {
   const user = {
     "email": document.getElementById("user_email").value,
     "password": document.getElementById("user_password").value,
+    "name": document.getElementById("username").value
   }
   signUp(auth, user);
 }
+window.userSignup = userSignup; 
+// // repeated email verification check 
+// function checkEmailVerification() {
 
-export function addUser() {
-  const user = {
-    "email": userCredentials.user.email ,
-    "name": "shin",
-    "creationDate": "30/09/2022",
-    "key": userCredentials.user.uid //`${userCredentials.user.uid}`
-  }
-  writeUserInfo(db, user);
+//   document.getElementById("auth_message").style.display = 'grid';
+//   document.getElementById("auth_tutorial").style.display = "block";
+
+//   setTimeout(function(){
+//       document.getElementById('auth_message').scrollIntoView();
+//   }, 500);
+//   setInterval(function () {
+//     if (auth.currentUser.emailVerified) {
+//       addUser(); 
+//       location.replace("../main_page.html"); 
+//     }
+//   }, 2000);
+// }
+
+
+
+// logout
+function logout () {
+  console.log("logout trial");
+  signOutUser(auth);
 }
-
-// Logout 
-const signOutEvent = document.getElementById("signoutbtn");
-console.log(signOutEvent);
-window.addEventListener("load", function () {
-  signOutEvent.addEventListener('click', () => {
-    signOutUser(auth);
-  });
-})
+window.logout = logout; 
 
 //login 
-const signInEvent = document.getElementById("login_btn");
-signInEvent.addEventListener('click', function (e) {
-  e.preventDefault();
+function login () {
+
+  console.log("connexion trial");
   const user = {
     "email": document.getElementById("user_email").value,
     "password": document.getElementById("user_password").value,
   }
   signIn(auth, user);
+}
+window.login = login; 
+
+// Password reset 
+function forgotten() {
+  const overlay = document.createElement("div"); 
+  overlay.id = "overlay"; 
+
+  const form = document.createElement('div');
+  form.id = "forgotten_form";
+  form.innerHTML = "<img src='../images/close_pop.png' class='close_popup' ><h1>Forgotten Password</h1><p>Enter your account email adress, an email will be sent to you with the link to reset your password.</p><input type='email' id='email_reset' placeholder='Your account Email' required><br><br><button class='login_button' id='reset_btn' >Reset Password</button>" 
+  overlay.appendChild(form); 
+  document.querySelector("body").appendChild(overlay); 
+
+  document.querySelector(".close_popup").addEventListener('click', function () {
+    overlay.remove();
+  })
+  document.getElementById("reset_btn").addEventListener('click', function () {
+    resetPassword(auth, document.getElementById("email_reset").value);
+    form.innerHTML = "<img src='../images/close_pop.png' class='close_popup' ><h2>An Email has been sent to allow you to reset your password</h2><button class='link_button' onclick=' window.open(`https://outlook.com`,`_blank`);signUpUser' >Go to Mail (Outlook.com)</button>"
+  })
+};
+window.forgotten = forgotten; 
+
+// Lock Screen button 
+let state = false; 
+document.querySelector(".lock").addEventListener("click", function () {
+    if (state == true) {
+        setIsScreenLocked(false); 
+        state = false;
+    } else {
+        setIsScreenLocked(true);
+        state = true;
+    }
 });
 
+// actual student location 
+document.querySelector(".student_location_button").addEventListener("click", function () {
+  getUserPosition();
+});
 
-function busLocations() {
-  //const busLocationsref = ref(db, 'busLocationsTest');
-  console.log('BusLocations is called');
-   onValue(ref(db, 'busLocationsTest'), (snapshot) => {
-    console.log("inside");
-    var loc = snapshot.val()
-    var data = JSON.stringify(loc);
-    console.log(loc);
-  });
-}
+// bus to user distance 
+document.querySelector("#show_distance").addEventListener("click", function () {
+  let distance = calculateUserAndBusDistance();
+  if (distance == false) {
+    document.getElementById("distance_display").innerHTML = ""; 
+  } else {
+   document.getElementById("distance_display").innerHTML = distance + "m"; 
+  }
+});
+
+// map 
+window.initMap = initMap; 
+
+
 
