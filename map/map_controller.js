@@ -137,7 +137,9 @@ function updateBusesMarkers(map, bus) {
     // );
     console.log("updating the bus markers");
     if (bus.busId in markers) {
+      // non selected bus without smooth animation
       markers[bus.busId].setPosition(new google.maps.LatLng(bus.latitude, bus.longitude));
+      //non selected bus with smooth animation
       // animatedMarker(bus.latitude, bus.longitude, markers[bus.busId].lat, markers[bus.busId].lng, null, 10, markers[bus.busId]);
     } else {
       markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
