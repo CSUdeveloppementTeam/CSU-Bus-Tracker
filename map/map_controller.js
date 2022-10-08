@@ -140,7 +140,7 @@ function updateBusesMarkers(map, bus) {
       // non selected bus without smooth animation
       markers[bus.busId].setPosition(new google.maps.LatLng(bus.latitude, bus.longitude));
       //non selected bus with smooth animation
-      // animatedMarker(bus.latitude, bus.longitude, markers[bus.busId].lat, markers[bus.busId].lng, null, 10, markers[bus.busId]);
+      // animatedMarker(bus.latitude, bus.longitude, markers[bus.busId].lat, markers[bus.busId].lng, null, bus, 10, markers[bus.busId]);
     } else {
       markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
       makeInfowindow(map, markers[bus.busId], bus.busId, bus.busLine);
@@ -206,10 +206,7 @@ function animateSelectedMarker(
   }
 
   function animatedMarker (new_lat,
-    new_lng,current_lat, current_lng,
-    rotation,
-    busObj,
-    n, busMarker) {
+    new_lng,current_lat, current_lng, rotation, busObj, n, busMarker) {
         var deltalat = (new_lat - current_lat) / 100;
         var deltalng = (new_lng - lng) / 100;
       
