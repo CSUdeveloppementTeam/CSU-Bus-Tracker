@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { deleteUser, getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo} from "./db_repository.js";
 import { getDatabase} from "firebase/database";
 import { signIn, signOutUser, signUp, resetPassword } from "./auth.js";
-import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance, setSelectedBus} from "../map/map_controller.js";
+import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance, setSelectedBus, displayUserPosition, deselectBus} from "../map/map_controller.js";
 import { initMap } from "../map/map_init.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -135,16 +135,27 @@ document.querySelector(".lock").addEventListener("click", function () {
 
 // actual student location 
 document.querySelector(".student_location_button").addEventListener("click", function () {
-  getUserPosition();
+  deselectBus(); 
+  getUserPosition(function () {
+    displayUserPosition();
+  });
 });
 
 // bus to user distance 
 document.querySelector("#show_distance").addEventListener("click", function () {
-  let distance = calculateUserAndBusDistance();
-  if (distance == false) {
-    document.getElementById("distance_display").innerHTML = ""; 
+  let distance;
+  if (window.hasOwnProperty('selectedBus')) {
+      getUserPosition(function () {
+        distance = calculateUserAndBusDistance();
+        console.log("distance in meter = " + distance);
+        if (distance == false) {
+          document.getElementById("distance_display").innerHTML = ""; 
+        } else {
+        document.getElementById("distance_display").innerHTML = distance + "m"; 
+        }
+      });
   } else {
-   document.getElementById("distance_display").innerHTML = distance + "m"; 
+    alert("Select a bus first"); 
   }
 });
 

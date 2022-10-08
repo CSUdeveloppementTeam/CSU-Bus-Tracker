@@ -110,6 +110,7 @@ function updateAvailableBusList() {
     for (let e = 0; e < bufferAvailableBuses.length; e++) {
       availableBuses.push(bufferAvailableBuses[e]);
       let option = document.createElement("option");
+      option.style.padding = "5px 17px";
       option.innerHTML = bufferAvailableBuses[e].busId + ": " +bufferAvailableBuses[e].busLine; 
       option.value = e;
       select_tag.appendChild(option); 
@@ -265,9 +266,11 @@ function animateSelectedMarker(
     // );
   }
 
-  function deselectBus() {
+export function deselectBus() {
+  console.log("bus deselected");
     if (selectedBus != null) {
       selectedBus = null;
+      document.querySelector(".bus_selector").value = null; 
       if (isScreenLocked == true) {
         setIsScreenLocked(false);
       }
@@ -292,45 +295,37 @@ export  function setIsScreenLocked(value) {
     }
   }
 
-export function getUserPosition() {
-  if (userPosition != null) {
-    deselectBus();
-    // just code the camera movement 
-    animateCameraPosition({lat: userPosition.latitude, lng: userPosition.longitude});
-  } else {
-  //    Get.find<MapPageController>().getUserCurrentPosition(true);
+export function getUserPosition(_callback) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (p) {
-            userPosition = {latitude: p.coords.latitude, longitude: p.coords.longitude};
-            console.log("position de l'étudiant")
-            console.log(userPosition); 
-            var studentMarker = createMarker({lat: userPosition.latitude, lng: userPosition.longitude}, "../img/icons/student.png");
-            animateCameraPosition({lat: p.coords.latitude, lng: p.coords.longitude});
-            console.log(studentMarker);
-            window.mapObj.setZoom(15);
-            return studentMarker; 
-        }, console.log("the geolocation service failed"));
+          navigator.geolocation.getCurrentPosition(function (p) {
+            userPosition = {lat: p.coords.latitude, lng: p.coords.longitude};
+            window.userPosition = userPosition;
+            _callback(); 
+        }, (err) => { console.warn(`ERROR(${err.code}): ${err.message}`); });
     } else {
         console.log("No geolocation available");
-    }
-  }
-  
-  
+    } 
+}
+export function displayUserPosition() {
+  var studentMarker = createMarker(window.userPosition, "../img/icons/student.png");
+  window.studentMarker = studentMarker; 
+  animateCameraPosition({lat: window.userPosition.lat, lng: window.userPosition.lng});
+  window.mapObj.setZoom(15);
 }
 
 export function calculateUserAndBusDistance() {
   if (currentSelectedBusPosition != null) {
     let mk1 = selectedBus; 
-    let mk2 = getUserPosition();
+    let mk2 = window.userPosition;
     console.log("calcul de distance:");
     console.log(mk2);
     var R = 6371.0710; 
     var rlat1 = mk1.latitude * (Math.PI/180); // Convert degrees to radians
-    var rlat2 = mk2.position.lat() * (Math.PI/180); // Convert degrees to radians
+    var rlat2 = mk2.lat * (Math.PI/180); // Convert degrees to radians
     var difflat = rlat2-rlat1; // Radian difference (latitudes)
-    var difflon = (mk2.position.lng() - mk1.longitude) * (Math.PI/180); // Radian difference (longitudes)
+    var difflon = (mk2.lng - mk1.longitude) * (Math.PI/180); // Radian difference (longitudes)
     
-    distanceInMeter = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));    
+    distanceInMeter = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));  
     return distanceInMeter; 
   } else {
     console.log("For some reason, we can't calculate your distance to the bus ");
@@ -356,7 +351,8 @@ export async function setSelectedBus(selectedbus) {
     lastKnownSelectedBusLatLng.longitude = selectedbus.longitude;
     currentSelectedBusPosition.latitude = selectedbus.latitude;
     currentSelectedBusPosition.longitude = selectedbus.longitude;
-    // calculateUserAndBusDistance();
+    window.selectedBus = selectedBus; 
+    // getUserPosition(calculateUserAndBusDistance());
 }
 
 export function setInitialBusesMarkers(map) {

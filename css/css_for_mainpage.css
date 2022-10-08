@@ -201,3 +201,10 @@ body{
 .lock_panel.unlock {
     display: none; 
 }
+.bus_selector:focus, .bus_selector:active, .bus_selector:click, .bus_selector:visited, .bus_selector:blur {
+    border: none;
+}
+.bus_selector option {
+    font-size: 16px;
+    line-height: 1.4rem;
+}
