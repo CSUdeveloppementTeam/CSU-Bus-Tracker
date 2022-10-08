@@ -122,14 +122,14 @@ function forgotten() {
 window.forgotten = forgotten; 
 
 // Lock Screen button 
-let state = false; 
+window.mapLockStat = false; 
 document.querySelector(".lock").addEventListener("click", function () {
-    if (state == true) {
+    if (window.mapLockStat == true) {
         setIsScreenLocked(false); 
-        state = false;
+        window.mapLockStat = false;
     } else {
         setIsScreenLocked(true);
-        state = true;
+        window.mapLockStat = true;
     }
 });
 

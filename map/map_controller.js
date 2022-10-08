@@ -136,8 +136,12 @@ function updateBusesMarkers(map, bus) {
     //   ),
     // );
     console.log("updating the bus markers");
-    markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
-    makeInfowindow(map, markers[bus.busId], bus.busId, bus.busLine);
+    if (bus.busId in markers) {
+      markers[bus.busId].setPosition(new google.maps.LatLng(bus.latitude, bus.longitude));
+    } else {
+      markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
+      makeInfowindow(map, markers[bus.busId], bus.busId, bus.busLine);
+    }
 
     if (selectedBus !== null) {
         if (selectedBus.busId == bus.busId) {
@@ -269,11 +273,11 @@ function animateSelectedMarker(
 
 export  function setIsScreenLocked(value) {
     isScreenLocked = value;
+    window.mapLockStat = isScreenLocked; 
     if (!value) {
       document.querySelector(".lock_panel").remove();
       deselectBus(); 
     } else {
-        console.log("lock the screen"); 
         let lockPanel = document.createElement("div");
         lockPanel.classList.add("lock_panel");
         document.getElementById("map").prepend(lockPanel);
