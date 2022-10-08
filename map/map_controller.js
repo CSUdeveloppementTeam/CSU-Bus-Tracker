@@ -34,7 +34,7 @@ export function busLocations(db, map) {
 export function handleBusLocations(locations,map) {
     var buses = [];
     if (Object.keys(locations).length > 0) {
-        clearArray(bufferAvailableBuses);
+        bufferAvailableBuses = [];
         buses = Object.values(locations);
         console.log(buses);
         buses.forEach((bus) => {
@@ -105,10 +105,19 @@ function handlesBusesMarkersUpdate(busLocation, map) {
 
 function updateAvailableBusList() {
     availableBuses= [];
-    bufferAvailableBuses.forEach((item)=>{
-      availableBuses.push(item);
-    });
-
+    let select_tag = document.querySelector(".bus_selector");
+    select_tag.innerHTML = ""; 
+    for (let e = 0; e < bufferAvailableBuses.length; e++) {
+      availableBuses.push(bufferAvailableBuses[e]);
+      let option = document.createElement("option");
+      option.innerHTML = bufferAvailableBuses[e].busId + ": " +bufferAvailableBuses[e].busLine; 
+      option.value = e;
+      select_tag.appendChild(option); 
+    }
+    
+    select_tag.value = "";
+    select_tag.setAttribute("placeholder", "Choose a bus");
+    window.availableBuses = availableBuses;  
     console.log(availableBuses);
 }
 
@@ -256,6 +265,7 @@ function animateSelectedMarker(
       // distanceInMeter = null;
     }
   }
+
 
 export  function setIsScreenLocked(value) {
     isScreenLocked = value;

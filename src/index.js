@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo} from "./db_repository.js";
 import { getDatabase} from "firebase/database";
 import { signIn, signOutUser, signUp, resetPassword } from "./auth.js";
-import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance} from "../map/map_controller.js";
+import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance, setSelectedBus} from "../map/map_controller.js";
 import { initMap } from "../map/map_init.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -146,6 +146,11 @@ document.querySelector("#show_distance").addEventListener("click", function () {
   } else {
    document.getElementById("distance_display").innerHTML = distance + "m"; 
   }
+});
+
+// set the selected bus 
+document.querySelector(".bus_selector").addEventListener("change", function (e) {
+  setSelectedBus(window.availableBuses[this.value]); 
 });
 
 // map 
