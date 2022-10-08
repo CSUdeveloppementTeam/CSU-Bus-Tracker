@@ -197,11 +197,11 @@ function animateSelectedMarker(
           new_lng, lat, lng,
           rotation,
           bus,
-          n, markers[selectedBus.busId])
-        // // updateSelectedBusCircle(latitude, longitude);
-        // if (!isScreenLocked) {
-        //   setIsScreenLocked(true);
-        // }
+          n, markers[selectedBus.busId]);
+        // updateSelectedBusCircle(latitude, longitude);
+        if (!isScreenLocked) {
+          setIsScreenLocked(true);
+        }
       }
     }
   }
@@ -228,17 +228,23 @@ function animateSelectedMarker(
   }
 
   function animateCameraPosition(position) {
-    // _googleMapController.animateCamera(
-    //   CameraUpdate.newCameraPosition(
-    //     CameraPosition(
-    //       //bearing: 192.8334901395799,
-    //       target: LatLng(latitude, longitude),
-    //       tilt: 0,
-    //       zoom: 18.00,
-    //     ),
-    //   ),
-    // );
-    window.mapObj.setCenter(position);
+    var lat = window.mapObj.getCenter().lat();
+    var lng = window.mapObj.getCenter().lng();
+
+    var deltalat = (position.lat - lat) / 100;
+    var deltalng = (position.lng - lng) / 100;
+        for (var i = 0; i < 100; i++) {
+          (function(ind) {
+            setTimeout(
+              function() {
+                lat = window.mapObj.getCenter().lat();
+                lng = window.mapObj.getCenter().lng();
+                lat += deltalat;
+                lng += deltalng;
+                window.mapObj.setCenter({lat: lat, lng: lng});
+              }, 10 * ind);
+          })(i)
+        }
   }
 
   function updateCircle(bus) {
