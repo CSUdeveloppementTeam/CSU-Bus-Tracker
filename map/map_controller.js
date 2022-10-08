@@ -209,7 +209,7 @@ function animateSelectedMarker(
   function animatedMarker (new_lat,
     new_lng,current_lat, current_lng, rotation, busObj, n, busMarker) {
         var deltalat = (new_lat - current_lat) / 100;
-        var deltalng = (new_lng - lng) / 100;
+        var deltalng = (new_lng - current_lng) / 100;
       
         for (var i = 0; i < 100; i++) {
           (function(ind) {
@@ -276,6 +276,7 @@ export function deselectBus() {
   console.log("bus deselected");
     if (selectedBus != null) {
       selectedBus = null;
+      window.selectedBus = null;
       document.querySelector(".bus_selector").value = null; 
       if (isScreenLocked == true) {
         setIsScreenLocked(false);

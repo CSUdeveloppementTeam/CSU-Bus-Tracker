@@ -142,9 +142,12 @@ document.querySelector(".student_location_button").addEventListener("click", fun
 });
 
 // bus to user distance 
-document.querySelector("#show_distance").addEventListener("click", function () {
+document.querySelector("#show_distance").addEventListener("click", updateD);
+
+function updateD() {
   let distance;
   if (window.hasOwnProperty('selectedBus')) {
+    if (window.setSelectedBus != null) {
       getUserPosition(function () {
         distance = Math.round(calculateUserAndBusDistance());
         console.log("distance in meter = " + distance);
@@ -154,14 +157,23 @@ document.querySelector("#show_distance").addEventListener("click", function () {
         document.getElementById("distance_display").innerHTML = distance + "m"; 
         }
       });
+    } else {
+      document.getElementById("distance_display").innerHTML = "";
+    }
   } else {
     alert("Select a bus first"); 
   }
-});
+}
+
+
 
 // set the selected bus 
 document.querySelector(".bus_selector").addEventListener("change", function (e) {
   setSelectedBus(window.availableBuses[this.value]); 
+  // real-time position updade 
+  navigator.geolocation.watchPosition(updateD, (err) => {
+    console.error(`ERROR(${err.code}): ${err.message}`);
+  });
 });
 
 // map 
