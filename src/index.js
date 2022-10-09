@@ -157,9 +157,7 @@ function updateD() {
         document.getElementById("distance_display").innerHTML = distance + "m"; 
         }
       });
-    } else {
-      document.getElementById("distance_display").innerHTML = "";
-    }
+    } 
   } else {
     alert("Select a bus first"); 
   }
