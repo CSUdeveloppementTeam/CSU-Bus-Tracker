@@ -123,7 +123,7 @@ window.forgotten = forgotten;
 
 // Lock Screen button 
 window.mapLockStat = false; 
-document.querySelector(".lock").addEventListener("click", function () {
+function lockScreen () {
     if (window.mapLockStat == true) {
         setIsScreenLocked(false); 
         window.mapLockStat = false;
@@ -131,18 +131,19 @@ document.querySelector(".lock").addEventListener("click", function () {
         setIsScreenLocked(true);
         window.mapLockStat = true;
     }
-});
+};
+window.lockScreen = lockScreen; 
 
 // actual student location 
-document.querySelector(".student_location_button").addEventListener("click", function () {
+function showStudentLoc() {
   deselectBus(); 
   getUserPosition(function () {
     displayUserPosition();
   });
-});
+};
+window.showStudentLoc = showStudentLoc; 
 
 // bus to user distance 
-document.querySelector("#show_distance").addEventListener("click", updateD);
 
 function updateD() {
   let distance;
@@ -162,17 +163,18 @@ function updateD() {
     alert("Select a bus first"); 
   }
 }
-
+window.updateD = updateD; 
 
 
 // set the selected bus 
-document.querySelector(".bus_selector").addEventListener("change", function (e) {
-  setSelectedBus(window.availableBuses[this.value]); 
+function select() {
+  setSelectedBus(window.availableBuses[document.querySelector(".bus_selector").value]); 
   // real-time position updade 
   navigator.geolocation.watchPosition(updateD, (err) => {
     console.error(`ERROR(${err.code}): ${err.message}`);
   });
-});
+};
+window.select = select; 
 
 // map 
 window.initMap = initMap; 

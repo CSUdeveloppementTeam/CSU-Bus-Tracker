@@ -22,7 +22,7 @@
                     <div></div>
                 </div>
                 <!--Bus Selector-->
-                <select class="bus_selector" placeholder="No bus available">
+                <select class="bus_selector" placeholder="No bus available" onchange="select()">
                 </select>
             </div>
             
@@ -55,15 +55,15 @@
 
             <div id="floating_side_buttons">
 
-                <button id="show_distance">
+                <button id="show_distance" onclick="updateD()">
                     <img src="img/icons/bus_icon.png">
                     <span>-</span>
                     <img src="img/icons/person_icon.png">
                 </button>
-                <button id="my_location" class="student_location_button">
+                <button id="my_location" class="student_location_button" onclick="showStudentLoc()">
                     <img src="img/icons/my_location_icon.png">
                 </button>
-                <button id="lock_unlock" class="lock">
+                <button id="lock_unlock" class="lock" onclick="lockScreen()">
                     <img src="img/icons/lock_unlock_icon.png">
                 </button>
                
