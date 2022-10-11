@@ -123,6 +123,14 @@ input[type=text],[type=password],[type=email]{
 #forgotten_form input {
     width: 65%;
 }
+#forgotten_pw {
+    border: none; 
+    background-color: transparent;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 0px;
+    margin-left: 0px;
+}
 .close_popup {
     height: 20px;
     position: absolute;

@@ -90,7 +90,8 @@ export function resetPassword(auth, email) {
     var actionCodeSettings = {
         url: 'https://csudeveloppementteam.github.io/CSU-Bus-Tracker/',
       };
-      auth.sendPasswordResetEmail(
+      console.log(firebase.auth());
+      firebase.auth.sendPasswordResetEmail(
         email, actionCodeSettings)
         .then(function() {
         // Password reset email sent.

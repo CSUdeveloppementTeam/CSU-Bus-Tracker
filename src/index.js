@@ -171,14 +171,20 @@ window.updateD = updateD;
 
 // set the selected bus 
 function select() {
-  setSelectedBus(window.availableBuses[document.querySelector(".bus_selector").value]); 
+  
+  for (let i = 0; i < window.availableBuses.length; i++) {
+    if (window.availableBuses[i].busId == document.querySelector(".bus_selector").value) {
+      setSelectedBus(window.availableBuses[i]);
+      break; 
+    }
+  } 
   // real-time position updade 
   navigator.geolocation.watchPosition(updateD, (err) => {
     console.error(`ERROR(${err.code}): ${err.message}`);
   });
   // updateD(); 
 };
-window.select = select; 
+window.Pressed = select; 
 
 // map 
 window.initMap = initMap; 
