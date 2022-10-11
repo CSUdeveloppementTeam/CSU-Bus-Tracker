@@ -146,9 +146,10 @@ window.showStudentLoc = showStudentLoc;
 // bus to user distance 
 
 function updateD() {
+  console.log('Calculate the distance')
   let distance;
   if (window.hasOwnProperty('selectedBus')) {
-    if (window.setSelectedBus != null) {
+    if (window.selectedBus != null) {
       getUserPosition(function () {
         distance = Math.round(calculateUserAndBusDistance());
         console.log("distance in meter = " + distance);
@@ -158,6 +159,8 @@ function updateD() {
         document.getElementById("distance_display").innerHTML = distance + "m"; 
         }
       });
+    } else {
+      alert("The bus is not selected");
     } 
   } else {
     alert("Select a bus first"); 
@@ -173,6 +176,7 @@ function select() {
   navigator.geolocation.watchPosition(updateD, (err) => {
     console.error(`ERROR(${err.code}): ${err.message}`);
   });
+  // updateD(); 
 };
 window.select = select; 
 

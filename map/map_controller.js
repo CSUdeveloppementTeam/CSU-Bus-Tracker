@@ -44,14 +44,11 @@ export function handleBusLocations(locations,map) {
         // setSelectedBus(bus);
         updateAvailableBusList();
     } else {
-        clearObject(markers);
+        markers = {};
         deselectBus();
         setInitialBusesMarkers();
         availableBuses = [];
-        animateCameraPosition(
-            35.32524482901032, //back to CSU
-            33.344921996725034,
-        );
+        animateCameraPosition({ lat: 35.32524482901032, lng: 33.344921996725034 });
     }
 }
 
@@ -66,11 +63,10 @@ function handlesBusesMarkersUpdate(busLocation, map) {
                     (lastKnownSelectedBusLatLng.longitude !==
                         busLocation.longitude)) {
                       animateSelectedMarker(busLocation, 10, null);
-                    animateCameraPosition({lat: busLocation.latitude, lng: busLocation.longitude});
+                      animateCameraPosition({lat: busLocation.latitude, lng: busLocation.longitude});
 
-                    lastKnownSelectedBusLatLng.latitude = window.mapObj.getCenter().lat();
-                    lastKnownSelectedBusLatLng.longitude = window.mapObj.getCenter().lng();
-                    console.log(lastKnownSelectedBusLatLng)
+                    lastKnownSelectedBusLatLng.latitude = busLocation.latitude;
+                    lastKnownSelectedBusLatLng.longitude = busLocation.longitude;
                     if (currentSelectedBusPosition === null) {
                         currentSelectedBusPosition = emptyGeoPoint;
                     }
@@ -112,7 +108,6 @@ function updateAvailableBusList() {
     select_tag.value = "";
     select_tag.setAttribute("placeholder", "Choose a bus");
     window.availableBuses = availableBuses;  
-    console.log(availableBuses);
 }
 
 function updateBusesMarkers(map, bus) {
@@ -134,11 +129,10 @@ function updateBusesMarkers(map, bus) {
             let new_camera_lat = bus.latitude;
             let new_camera_lng = bus.longitude;
             
-            console.log(new_camera_lat+", " + new_camera_lng);
             animateCameraPosition({lat: new_camera_lat, lng: new_camera_lng});
-            if (!isScreenLocked) {
-                isScreenLocked = true;
-            }
+            // if (!isScreenLocked) {
+            //     isScreenLocked = true;
+            // }
         }
     }
 }
@@ -149,11 +143,12 @@ function animateSelectedMarker(
 ) {
   if (selectedBus != null) {
     if (selectedBus.busId == newBusLocation.busId) {
-      if (markers[selectedBus.busId] == null) {
+      if (markers[selectedBus.busId] === null) {
         markers[selectedBus.busId] = createMarker({ lat: selectedBus.latitude, lng: selectedBus.longitude }, bus_marker_icon);
         makeInfowindow(map, markers[selectedBus.busId], selectedBus.busId, selectedBus.busLine);
       }
 	    animateMarker({lat: selectedBus.latitude, lng: selectedBus.longitude}, newBusLocation, markers[selectedBus.busId], n);
+      animateCameraPosition({lat: newBusLocation.latitude, lng: newBusLocation.longitude}); 
       if (!window.mapLockStat) {
         setIsScreenLocked(true);
       }
@@ -164,23 +159,30 @@ function animateMarker (actual, new_position, marker, n) {
 	var lat = actual.lat;
   var lng = actual.lng;
   var latlng;
+  console.log("passed to location: ")
+  console.log(new_position);
 	var deltalat = (new_position.latitude - lat) / 100;
-      var deltalng = (new_position.longitude - lng) / 100;
+  var deltalng = (new_position.longitude - lng) / 100;
 
-      for (var i = 0; i < 100; i++) {
-        (function (ind) {
-          setTimeout(
-            function () {
-              lat = marker.position.lat();
-              lng = marker.position.lng();
+  var e = 0; 
+  while (e < 100 ) {
+    (function (ind) {
+      setTimeout(
+        function () {
+          lat = marker.position.lat();
+          lng = marker.position.lng();
 
-              lat += deltalat;
-              lng += deltalng;
-              latlng = new google.maps.LatLng(lat, lng);
-              marker.setPosition(latlng);
-            }, n * ind);
-        })(i)
-      }
+          lat += deltalat;
+          lng += deltalng;
+          latlng = new google.maps.LatLng(lat, lng);
+          marker.setPosition(latlng);
+          if (e == 99) {console.log(lat + " X " + new_position.latitude)}
+        }, n * ind);
+    })(e)
+    e++;
+  }
+  console.log('final position: ');
+  console.log(marker.position.lat() + " X " + marker.position.lng()); 
 }
 
   function animateCameraPosition(position) {
@@ -202,6 +204,8 @@ function animateMarker (actual, new_position, marker, n) {
               }, 10 * ind);
           })(i)
         }
+        console.log("camera position: ")
+        console.log(position);
   }
 
   
@@ -260,7 +264,7 @@ export function calculateUserAndBusDistance() {
     let mk1 = selectedBus; 
     let mk2 = window.userPosition;
     console.log("calcul de distance:");
-    console.log(mk2);
+    // console.log(mk2);
     var R = 6371.0710; 
     var rlat1 = mk1.latitude * (Math.PI/180); // Convert degrees to radians
     var rlat2 = mk2.lat * (Math.PI/180); // Convert degrees to radians
@@ -290,11 +294,11 @@ export function setSelectedBus(selectedbus) {
     markers[selectedbus.busId].setIcon("../img/icons/selected_bus_marker.svg"); 
     animateCameraPosition({lat: new_camera_lat, lng: new_camera_lng});
     setIsScreenLocked(true);
-    lastKnownSelectedBusLatLng.latitude = selectedbus.latitude;
-    lastKnownSelectedBusLatLng.longitude = selectedbus.longitude;
-    currentSelectedBusPosition.latitude = selectedbus.latitude;
-    currentSelectedBusPosition.longitude = selectedbus.longitude;
     window.selectedBus = selectedBus; 
+    lastKnownSelectedBusLatLng.latitude = window.selectedBus.latitude;
+    lastKnownSelectedBusLatLng.longitude = window.selectedBus.longitude;
+    currentSelectedBusPosition.latitude = window.selectedBus.latitude;
+    currentSelectedBusPosition.longitude = window.selectedBus.longitude;
     // getUserPosition(calculateUserAndBusDistance());
 }
 
