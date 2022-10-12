@@ -16,6 +16,7 @@ export const signUp = (auth, user) => {
                 "creationDate": userCredential.user.metadata.creationTime,
                 "key": userCredential.user.uid,
               }
+            writeUserInfo(db, userDetails);
             console.log("user signed up successfully");
             sendToUserEmailVerificationLink(auth);
         })
@@ -47,7 +48,6 @@ export function checkEmailVerification(auth, db) {
     }, 500);
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
-        writeUserInfo(db, userDetails);
         location.replace("../main_page.html"); 
       } 
     }, 2000);

@@ -42,7 +42,10 @@ a:hover {
 .cover_section h1 {
     margin: 20px 15px; 
 }
-
+.value_statement p {
+    width: 80%;
+    margin-bottom: 15px;
+}
 /*second section */ 
 .presentation_block ul, .video_guide {
     padding: 0px; 
@@ -105,7 +108,16 @@ a:hover {
 .header .button.orange {
     margin: 0px; 
 }
-
+.blue {
+    margin-top: 15px;
+    border: 2px solid #DD4A15; 
+    color: #DD4A15;
+    transition: .4s ease-in-out;
+}
+.blue:hover {
+    background-color: #DD4A15;
+    color: white;
+}
 /*ending sections */ 
 .ending_section p {
     text-align: justify;
