@@ -39,7 +39,7 @@ const sendToUserEmailVerificationLink = (auth) => {
 }
 
 
-function checkEmailVerification(auth, db) {
+export function checkEmailVerification(auth, db) {
     document.getElementById("auth_message").style.display = 'grid';
     document.getElementById("auth_tutorial").style.display = "block";
     setTimeout(function(){
@@ -49,6 +49,8 @@ function checkEmailVerification(auth, db) {
       if (auth.currentUser.emailVerified) {
         writeUserInfo(db, userDetails);
         location.replace("../main_page.html"); 
+      } else {
+        alert("Email not verified !"); 
       }
     }, 2000);
   }

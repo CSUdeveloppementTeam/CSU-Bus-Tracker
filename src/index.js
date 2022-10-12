@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { deleteUser, getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo} from "./db_repository.js";
 import { getDatabase} from "firebase/database";
-import { signIn, signOutUser, signUp, resetPassword } from "./auth.js";
+import { signIn, signOutUser, signUp, resetPassword, checkEmailVerification } from "./auth.js";
 import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance, setSelectedBus, displayUserPosition, deselectBus} from "../map/map_controller.js";
 import { initMap } from "../map/map_init.js";
 
@@ -36,7 +36,8 @@ onAuthStateChanged(auth, (user) => {
     getUserInfo(db, user.uid);
     var fileName = location.href.split("/").pop();
     if(fileName !== "main_page.html"){
-      location.replace("../main_page.html");
+      // location.replace("../main_page.html");
+      checkEmailVerification(auth);
     } else {
       busLocations(db, window.mapObj);
     }
@@ -53,6 +54,10 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+function checkVer() {
+  checkEmailVerification(auth);
+}
+window.checkVer = checkVer;
 function userSignup () {
   const user = {
     "email": document.getElementById("user_email").value,
