@@ -1,6 +1,6 @@
 import {
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    sendEmailVerification, signOut, updatePassword
+    sendEmailVerification, signOut, updatePassword, sendPasswordResetEmail
 } from "firebase/auth";
 import { writeUserInfo } from "./db_repository";
 
@@ -87,19 +87,19 @@ export function updateUserPassword(auth, newPassword){
 }
  
 export function resetPassword(auth, email) {
-    var actionCodeSettings = {
-        url: 'https://csudeveloppementteam.github.io/CSU-Bus-Tracker/',
-      };
-      console.log(firebase.auth());
-      firebase.auth.sendPasswordResetEmail(
-        email, actionCodeSettings)
-        .then(function() {
-        // Password reset email sent.
-        console.log("the email has been sent succesfully !");
-        })
-        .catch(function(error) {
-        // Error occurred. Inspect error.code.
-        console.error('an eror occured !', error);
-        });
+    // var actionCodeSettings = {
+    //     url: 'https://csudeveloppementteam.github.io/CSU-Bus-Tracker/',
+    //   };
+    sendPasswordResetEmail(auth, email).then(() => {
+    // Password reset email sent!
+    // ..
+    console.log("the email has been sent succesfully !");
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    console.log(errorMessage, errorCode);
+  });
     
 }

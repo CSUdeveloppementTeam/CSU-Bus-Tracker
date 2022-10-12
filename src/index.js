@@ -60,6 +60,7 @@ function userSignup () {
     "name": document.getElementById("username").value
   }
   signUp(auth, user);
+  console.log("signed the user up");
 }
 window.userSignup = userSignup; 
 // // repeated email verification check 

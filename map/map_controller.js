@@ -329,15 +329,13 @@ export function calculateUserAndBusDistance() {
   if (currentSelectedBusPosition != null) {
     let mk1 = window.selectedBus;
     let mk2 = window.userPosition;
-    console.log("calcul de distance:");
-    console.log(mk2);
-    var R = 6371.0710;
+    var R = 6378137.0;
     var rlat1 = mk1.latitude * (Math.PI/180); // Convert degrees to radians
     var rlat2 = mk2.lat * (Math.PI/180); // Convert degrees to radians
     var difflat = rlat2-rlat1; // Radian difference (latitudes)
     var difflon = (mk2.lng - mk1.longitude) * (Math.PI/180); // Radian difference (longitudes)
-
-    distanceInMeter = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));  
+    distanceInMeter = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+    console.log("ardi's distance: " +distanceInMeter);
     return distanceInMeter;
   } else {
     console.log("For some reason, we can't calculate your distance to the bus ");
