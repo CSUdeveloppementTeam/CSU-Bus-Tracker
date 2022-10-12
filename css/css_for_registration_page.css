@@ -43,4 +43,20 @@ body{
 .auth_tutorial>*>img{
     height: 600px;
 }
+.arrow {
+    height: 25px;
+    background: blue;
+    padding: 20px;
+    border-radius: 100%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+    margin-top: -376px;
+    float: right;
+    box-shadow: #000000a3 -3px 9px 15px;
+    scroll-behavior: smooth;
+}
 
+#scrollable_div_auth_tutorial{
+    scroll-behavior: smooth;
+}

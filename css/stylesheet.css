@@ -85,15 +85,15 @@ input[type=text],[type=password],[type=email]{
     height: 50px;
     width: auto;
     max-width: 300px;
-    background-color: blue;
+    background-color: #DD4A15;
     color: white;
     transition: .3s;
     border-radius: 5px;
     border: none;
 }
 .link_button:hover{
-    background-color: orange;
-    color: black;
+    background-color: black;
+    color: white;
 }
 #overlay {
     height: 100vh;

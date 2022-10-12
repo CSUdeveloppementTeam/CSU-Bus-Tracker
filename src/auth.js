@@ -49,9 +49,7 @@ export function checkEmailVerification(auth, db) {
       if (auth.currentUser.emailVerified) {
         writeUserInfo(db, userDetails);
         location.replace("../main_page.html"); 
-      } else {
-        alert("Email not verified !"); 
-      }
+      } 
     }, 2000);
   }
 
