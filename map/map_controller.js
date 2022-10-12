@@ -37,7 +37,6 @@ export function handleBusLocations(locations,map) {
   if (Object.keys(locations).length > 0) {
     bufferAvailableBuses = [];
     buses = Object.values(locations);
-        console.log(buses);
     buses.forEach((bus) => {
           console.log(bus);
       handlesBusesMarkersUpdate(bus, map);
@@ -85,7 +84,7 @@ function handlesBusesMarkersUpdate(busLocation, map) {
       updateBusesMarkers(map, busLocation);
     }
   } else {
-    if (selectedBus.value != null) {
+    if (selectedBus != null) {
       if (busLocation.busId == selectedBus.busId) {
         deselectBus();
       }
@@ -106,17 +105,21 @@ function updateAvailableBusList() {
     let disapeared = true;  
     for (let x = 0; x < bufferAvailableBuses.length; x++) {
       if (item.busId == bufferAvailableBuses[x].busId) {
+        console.log("didn't disapeared");
         disapeared = false;
       }
       if (disapeared == true) {
+        console.log(" disapeared");
         document.querySelector([id=item.busId]).remove();
         markers[item.busId].setMap(null);
       }
     }
+    console.log("check desapeared");
   })
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
     if (bufferAvailableBuses[e].presence)  {
+        console.log("this bus is present")
         availableBuses.push(bufferAvailableBuses[e]);
       let wasPresent = false; 
       for (let i = 0; i < previousAvailableBuses.length; i++) {
@@ -136,6 +139,7 @@ function updateAvailableBusList() {
         console.log('was not there ');
       }
     } else {
+      console.log('this bus is absent');
       document.querySelector([id=bufferAvailableBuses.busId]).remove();
       markers[bufferAvailableBuses.busId].setMap(null);
     } 
@@ -323,7 +327,7 @@ export function displayUserPosition() {
 
 export function calculateUserAndBusDistance() {
   if (currentSelectedBusPosition != null) {
-    let mk1 = selectedBus;
+    let mk1 = window.selectedBus;
     let mk2 = window.userPosition;
     console.log("calcul de distance:");
     console.log(mk2);
