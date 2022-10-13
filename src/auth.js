@@ -31,8 +31,6 @@ const sendToUserEmailVerificationLink = (auth) => {
     sendEmailVerification(auth.currentUser)
         .then(() => {
             console.log('Verifiction email sent');
-            document.getElementById("auth_message").style.display = 'grid';
-            document.getElementById("auth_tutorial").style.display = "block";
             checkEmailVerification(auth);
         }).catch((error) => {
             const errorCode = error.code;
