@@ -23,7 +23,9 @@ export function busLocations(db, map) {
   console.log('BusLocations is called');
   onValue(ref(db, 'busLocations'), (snapshot) => {
     var loc = snapshot.val();
-    handleBusLocations(loc, map)
+    if (loc != null && typeof loc !== undefined) {
+      handleBusLocations(loc, map);  
+    }
     console.log(loc);
   },
     (error)=>{
@@ -44,7 +46,6 @@ export function handleBusLocations(locations,map) {
   } else {
     markers = {};
     deselectBus();
-    setInitialBusesMarkers();
     availableBuses = [];
     animateCameraPosition({ lat: 35.32524482901032, lng: 33.344921996725034 });//back to CSU
   }
@@ -52,9 +53,9 @@ export function handleBusLocations(locations,map) {
 
 
 function handlesBusesMarkersUpdate(busLocation, map) {
-  if (busLocation.presence) {
+  if (busLocation.presence ) {
     bufferAvailableBuses.push(busLocation);
-        if (selectedBus !== null) {
+    if (selectedBus !== null) {
       console.log("a bus is selected");
       if (busLocation.busId === selectedBus.busId) {
         if ((selectedBus.latitude !== busLocation.latitude) &&
@@ -90,25 +91,37 @@ function handlesBusesMarkersUpdate(busLocation, map) {
     }
     //TODO: update it javascript
     // markers.remove(MarkerId(busLocation.busId));
+    console.log(busLocation);
+    console.log(window.markers[busLocation.busId]);
+    if (window.markers[busLocation.busId] != null) {
+      window.markers[busLocation.busId].setMap(null);  
+    }
+    if (document.getElementById(busLocation.busId) != null && typeof document.getElementById(busLocation.busId) !== undefined) {
+      document.getElementById(busLocation.busId).remove();
+    }
+    window.markers[busLocation.busId] = null;
   }
+  busLocation = null; 
 }
 
 function updateAvailableBusList() {
   let previousAvailableBuses = availableBuses; 
   availableBuses= [];
   let select_tag = document.querySelector(".bus_selector");
-  //  select_tag.innerHTML = ""; 
+  // select_tag.innerHTML = ""; 
 
-  // remove an disapeared bus 
+  // // remove an disapeared bus 
+  // let disapeared;
   // previousAvailableBuses.forEach((item) => {
-  //   let disapeared = true;  
-  //   for (let x = 0; x < bufferAvailableBuses.length; x++) {
-  //     if (item.busId == bufferAvailableBuses[x].busId) {
+  //    disapeared = true;  
+  //   for (let x = 0; x < availableBuses.length; x++) {
+  //     if (item.busId == availableBuses[x].busId) {
   //       console.log("didn't disapeared");
   //       disapeared = false;
   //     }
   //     if (disapeared == true) {
   //       console.log(" disapeared");
+  //       console.log(document.getElementById(item.busId));
   //       document.getElementById(item.busId).remove();
   //       markers[item.busId].setMap(null);
   //       markers[item.busId] = null; 
@@ -118,14 +131,16 @@ function updateAvailableBusList() {
   // })
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
-    if (bufferAvailableBuses[e].presence)  {
         console.log("this bus is present")
         availableBuses.push(bufferAvailableBuses[e]);
       let wasPresent = false; 
       for (let i = 0; i < previousAvailableBuses.length; i++) {
         if (bufferAvailableBuses[e].busId == previousAvailableBuses[i].busId) {
           console.log('was already there');
-          wasPresent = true; 
+          wasPresent = true;
+          if (bufferAvailableBuses[e].busLine != previousAvailableBuses[i].busLine) {
+            document.getElementById(bufferAvailableBuses[e].busId).innerHTML = bufferAvailableBuses[e].busId + ": " +bufferAvailableBuses[e].busLine;
+          } 
           break; 
         }
       }
@@ -138,27 +153,24 @@ function updateAvailableBusList() {
         select_tag.appendChild(option); 
         console.log('was not there ');
       }
-    } else {
-      console.log('this bus is absent');
-      document.querySelector([id=bufferAvailableBuses.busId]).remove();
-      markers[bufferAvailableBuses.busId].setMap(null);
-      markers[bufferAvailableBuses.busId] = null; 
-    } 
+    
   }
   
   if (selectedBus == null) {
     select_tag.value = "";
   } 
-  window.availableBuses = availableBuses;  
+  window.availableBuses = availableBuses; 
+
 }
 
 function updateBusesMarkers(map, bus) {
   console.log("updating the bus markers");
   console.log("id du bus" + bus.busId);
 
-  if ( markers[bus.busId] != null) { 
+  if (markers[bus.busId] != null) { 
     console.log("unselected marker move");
-    animateMarker(bus, markers[bus.busId], markers[bus.busId], 10);
+    // animateMarker(bus, markers[bus.busId], markers[bus.busId], 10);
+    markers[bus.busId].setPosition({lat:bus.latitude, lng: bus.longitude});
   } else {
     markers[bus.busId] = createMarker({lat:bus.latitude, lng:bus.longitude}, bus_marker_icon);
     makeInfowindow(map, markers[bus.busId], bus.busId, bus.busLine);
@@ -176,7 +188,7 @@ function updateBusesMarkers(map, bus) {
           
           animateCameraPosition({lat: new_camera_lat, lng: new_camera_lng});
           if (!isScreenLocked) {
-              isScreenLocked = true;
+              setIsScreenLocked(true);
           }
       }
   }
@@ -282,7 +294,6 @@ export function deselectBus() {
   console.log("bus deselected");
   if (selectedBus != null) {
     markers[selectedBus.busId].setIcon("../img/icons/bus_marker.svg");
-    selectedBus = null;
     selectedBus = null;
     document.querySelector(".bus_selector").value = null; 
     if (isScreenLocked == true) {
