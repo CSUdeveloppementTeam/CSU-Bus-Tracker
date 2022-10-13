@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Registration</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/stylesheet.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/css_for_registration_page.css'>
+    <script type="text/javascript" src="dist/bundle.js" defer></script>
+</head>
+
+<style>
+    body{
+        background-image: url(img/illustrations/password_transparent.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: auto 40vh;
+        background-position: 89% 90%;
+    }
+</style>
+<body>
+    <!-- signup div
+    ======================================================-->
+    <div class="signup_container">
+        <div class="signup_container_div" method="post" action="">
+                <img class="appicon" src="img/csu bus tracker.png">
+                <h1 >Sign up for your account</h1>
+                <br>
+                <input type="text" placeholder="Enter username" id="username" required>
+                <br>
+                <input type="email" placeholder="kius email address" id="user_email" required>
+                <br>
+                <input type="password" placeholder="Password" id="user_password" required>
+                <br>
+                <button class="login_button"  id="signUpBtn" onclick="userSignup()">Register</button>
+                <br>
+                <span>already have an account ?<a href="login.html">Login</a></span>
+        </div>
+
+
+        <!-- authentication message sent to spam
+            go to Outlook.com-->
+        <div class="auth_div" id="auth_message">
+                <p style="color: rgb(64, 64, 64)">A confirmation mail has been sent to your email. Check your inbox/spam folder</p>
+                <button class="link_button" onclick=" window.open('https:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
+        </div>
+    </div>
+    <br>
+    <hr>
+
+    <!-- How to get the link from the spam folder
+    ======================================================-->
+    <div class="auth_tutorial" id="auth_tutorial">
+        <br>
+        <h3 style="text-align: center; color: rgb(68, 68, 68)">How to get the Confimation link from your in box</h3>
+        <div id="scrollable_div_auth_tutorial">                        
+            <img src="img/auth_tutorial/1_(1).png">
+            <img src="img/auth_tutorial/4_(1).png">
+            <img src="img/auth_tutorial/5.png">
+            <img src="img/auth_tutorial/7.png">
+            <img src="img/auth_tutorial/8.png">
+        </div>
+        <img class="arrow" src="img/icons/arrow.png" onclick="document.getElementById('scrollable_div_auth_tutorial').scrollBy(320, 0);" >
+        <br>
+        <button class="link_button" id="check_verf_btn" style="width: 300px; margin:auto; display:block;" onclick="checkVer()">Open the Tracker</button>
+    </div> 
+
+    <!-- langauge selector
+    ======================================================-->
+    <footer>
+        <br>
+        <select class="language_selector">
+            <option>English</option>
+            <option>Turkish</option>
+        </select>
+    </footer>
+</body>
+</html>

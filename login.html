@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Log in Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="css/stylesheet.css">
+
+</head>
+
+<style>
+    body {
+        background-image: url(img/illustrations/login_transparent.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: auto 40vh;
+        background-position: 89% 90%;
+    }
+</style>
+<body>   
+    <div class="container_div" >
+        <img class="appicon" src="img/csu bus tracker.png">
+        <h1 >Login</h1>
+        <br>
+        <input type="email" placeholder="Enter email" id="user_email" required>
+        <br> 
+        <input type="password" placeholder="Password" id="user_password" required>
+        <br>
+        <button class="login_button" id="login_btn" onclick="login();">Login</button>
+        <hr>
+        <button  id="forgotten_pw" onclick="forgotten()">Forgot Password?</button>
+        <br>
+        <span>Your don't have an account ? <a href="registration_page.html">Signup</a></span>
+
+    </div>
+    <footer>
+        <br>
+        <select class="language_selector">
+            <option>English</option>
+            <option>Turkish</option>
+        </select>
+    </footer>
+    <script type="text/javascript" src="dist/bundle.js"></script>
+</body>
+</html>
