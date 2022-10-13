@@ -66,6 +66,8 @@ function userSignup () {
   }
   signUp(auth, user);
   console.log("signed the user up");
+  document.getElementById("auth_message").style.display = 'grid';
+  document.getElementById("auth_tutorial").style.display = "block";
 }
 window.userSignup = userSignup; 
 
