@@ -35,7 +35,7 @@ onAuthStateChanged(auth, (user) => {
     console.log(`connected user: ${user.email}`);
     getUserInfo(db, user.uid);
     var fileName = location.href.split("/").pop();
-    if(fileName !== "CSU-Bus-Tracker/main_page.html"){
+    if(fileName !== "/main_page.html"){
       // location.replace("../main_page.html");
       checkEmailVerification(auth);
     } else {
@@ -48,7 +48,7 @@ onAuthStateChanged(auth, (user) => {
     console.log("file: "+fileName);
     if(wasAlreadyConnected){
       if(fileName !== "index.html"){
-        location.replace("../index.html");
+        location.replace("/index.html");
       }
     }
   }

@@ -46,7 +46,7 @@ export function checkEmailVerification(auth, db) {
     }, 500);
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
-        location.replace("https://csudeveloppementteam.github.io/main_page.html"); 
+        location.replace("/main_page.html"); 
       } 
     }, 2000);
   }
@@ -57,7 +57,7 @@ export const signIn = (auth, { email, password }) => {
             // Signed in 
             const user = userCredential.user;
             console.log("user signed in successfully" + user);
-            location.replace("https://csudeveloppementteam.github.io/main_page.html");
+            location.replace("/main_page.html");
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -70,7 +70,7 @@ export const signIn = (auth, { email, password }) => {
 export function signOutUser(auth) {
     signOut(auth).then(() => {
         console.log('Signed Out');
-        location.replace('https://csudeveloppementteam.github.io/login.html');
+        location.replace('/login.html');
     }).catch((error) => {
         console.error('Sign Out Error', error);
     });
