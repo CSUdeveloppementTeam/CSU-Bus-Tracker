@@ -31,6 +31,8 @@ const sendToUserEmailVerificationLink = (auth) => {
     sendEmailVerification(auth.currentUser)
         .then(() => {
             console.log('Verifiction email sent');
+            document.getElementById("auth_message").style.display = 'grid';
+            document.getElementById("auth_tutorial").style.display = "block";
             checkEmailVerification(auth);
         }).catch((error) => {
             const errorCode = error.code;
@@ -41,8 +43,6 @@ const sendToUserEmailVerificationLink = (auth) => {
 
 
 export function checkEmailVerification(auth, db) {
-    document.getElementById("auth_message").style.display = 'grid';
-    document.getElementById("auth_tutorial").style.display = "block";
     setTimeout(function(){
         document.getElementById('auth_message').scrollIntoView();
     }, 500);
