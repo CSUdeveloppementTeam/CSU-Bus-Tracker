@@ -57,7 +57,7 @@ export const signIn = (auth, { email, password }) => {
             // Signed in 
             const user = userCredential.user;
             console.log("user signed in successfully" + user);
-            location.replace("../main_page.html");
+            location.replace("main_page.html");
         })
         .catch((error) => {
             const errorCode = error.code;
