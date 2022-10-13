@@ -21,7 +21,7 @@ const bus_marker_icon = "../img/icons/bus_marker.svg";
 
 export function busLocations(db, map) {
   console.log('BusLocations is called');
-  onValue(ref(db, 'busLocationsTest'), (snapshot) => {
+  onValue(ref(db, 'busLocations'), (snapshot) => {
     var loc = snapshot.val();
     handleBusLocations(loc, map)
     console.log(loc);
@@ -38,7 +38,6 @@ export function handleBusLocations(locations,map) {
     bufferAvailableBuses = [];
     buses = Object.values(locations);
     buses.forEach((bus) => {
-          console.log(bus);
       handlesBusesMarkersUpdate(bus, map);
     });
     updateAvailableBusList();
@@ -77,7 +76,7 @@ function handlesBusesMarkersUpdate(busLocation, map) {
           // calculateUserAndBusDistance();
         }
       } else {
-        updateBusesMarkers(busLocation);
+        updateBusesMarkers(map, busLocation);
       }
     } else {
       console.log("no selected bus");
@@ -98,24 +97,25 @@ function updateAvailableBusList() {
   let previousAvailableBuses = availableBuses; 
   availableBuses= [];
   let select_tag = document.querySelector(".bus_selector");
-  // select_tag.innerHTML = ""; 
+  //  select_tag.innerHTML = ""; 
 
   // remove an disapeared bus 
-  previousAvailableBuses.forEach((item) => {
-    let disapeared = true;  
-    for (let x = 0; x < bufferAvailableBuses.length; x++) {
-      if (item.busId == bufferAvailableBuses[x].busId) {
-        console.log("didn't disapeared");
-        disapeared = false;
-      }
-      if (disapeared == true) {
-        console.log(" disapeared");
-        document.querySelector([id=item.busId]).remove();
-        markers[item.busId].setMap(null);
-      }
-    }
-    console.log("check desapeared");
-  })
+  // previousAvailableBuses.forEach((item) => {
+  //   let disapeared = true;  
+  //   for (let x = 0; x < bufferAvailableBuses.length; x++) {
+  //     if (item.busId == bufferAvailableBuses[x].busId) {
+  //       console.log("didn't disapeared");
+  //       disapeared = false;
+  //     }
+  //     if (disapeared == true) {
+  //       console.log(" disapeared");
+  //       document.getElementById(item.busId).remove();
+  //       markers[item.busId].setMap(null);
+  //       markers[item.busId] = null; 
+  //     }
+  //   }
+  //   console.log("check desapeared");
+  // })
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
     if (bufferAvailableBuses[e].presence)  {
@@ -142,6 +142,7 @@ function updateAvailableBusList() {
       console.log('this bus is absent');
       document.querySelector([id=bufferAvailableBuses.busId]).remove();
       markers[bufferAvailableBuses.busId].setMap(null);
+      markers[bufferAvailableBuses.busId] = null; 
     } 
   }
   
@@ -153,7 +154,9 @@ function updateAvailableBusList() {
 
 function updateBusesMarkers(map, bus) {
   console.log("updating the bus markers");
-  if (bus.busId in markers) {
+  console.log("id du bus" + bus.busId);
+
+  if ( markers[bus.busId] != null) { 
     console.log("unselected marker move");
     animateMarker(bus, markers[bus.busId], markers[bus.busId], 10);
   } else {

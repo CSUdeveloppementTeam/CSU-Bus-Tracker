@@ -68,22 +68,6 @@ function userSignup () {
   console.log("signed the user up");
 }
 window.userSignup = userSignup; 
-// // repeated email verification check 
-// function checkEmailVerification() {
-
-//   document.getElementById("auth_message").style.display = 'grid';
-//   document.getElementById("auth_tutorial").style.display = "block";
-
-//   setTimeout(function(){
-//       document.getElementById('auth_message').scrollIntoView();
-//   }, 500);
-//   setInterval(function () {
-//     if (auth.currentUser.emailVerified) {
-//       addUser(); 
-//       location.replace("../main_page.html"); 
-//     }
-//   }, 2000);
-// }
 
 
 
@@ -102,7 +86,11 @@ function login () {
     "email": document.getElementById("user_email").value,
     "password": document.getElementById("user_password").value,
   }
-  signIn(auth, user);
+  let result = signIn(auth, user);
+  console.log(result); 
+  if (result.isError == true) {
+    alert(result.errorMessage);
+  }
 }
 window.login = login; 
 

@@ -3,7 +3,7 @@ import { ref, set, onValue,} from "firebase/database";
 export async function writeUserInfo(db, user) {
   const { name, creationDate, email, key} = user
   try {
-    await set(ref(db, 'webtestUsers/'+ key + '/info'), {
+    await set(ref(db, 'users/'+ key + '/info'), {
       name: name,
       email: email,
       creationDate: creationDate,
