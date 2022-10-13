@@ -70,7 +70,7 @@ export const signIn = (auth, { email, password }) => {
 export function signOutUser(auth) {
     signOut(auth).then(() => {
         console.log('Signed Out');
-        location.replace('../login.html');
+        location.replace('login.html');
     }).catch((error) => {
         console.error('Sign Out Error', error);
     });
