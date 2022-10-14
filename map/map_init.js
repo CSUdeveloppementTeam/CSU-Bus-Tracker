@@ -1,8 +1,4 @@
 let mapObj;
-import { createMarker } from "./makeMarker.js";
-import { displayStudentLocation } from "./currentLocation.js";
-import { animatedMove } from "./busMovement.js";
-import { makeInfowindow } from "./infowindow.js";
 import { setInitialBusesMarkers } from "./map_controller.js";
 export function initMap() {
     let options = {
