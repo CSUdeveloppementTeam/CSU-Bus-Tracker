@@ -20,13 +20,11 @@ let userPosition;
 const bus_marker_icon = "../img/icons/bus_marker.svg";
 
 export function busLocations(db, map) {
-  console.log('BusLocations is called');
   onValue(ref(db, 'busLocations'), (snapshot) => {
     var loc = snapshot.val();
     if (loc != null && typeof loc !== undefined) {
       handleBusLocations(loc, map);  
     }
-    console.log(loc);
   },
     (error)=>{
       console.error('BusLocations error: ', error)
@@ -56,7 +54,6 @@ function handlesBusesMarkersUpdate(busLocation, map) {
   if (busLocation.presence ) {
     bufferAvailableBuses.push(busLocation);
     if (selectedBus !== null) {
-      console.log("a bus is selected");
       if (busLocation.busId === selectedBus.busId) {
         if ((selectedBus.latitude !== busLocation.latitude) &&
           (selectedBus.longitude !==
@@ -68,7 +65,6 @@ function handlesBusesMarkersUpdate(busLocation, map) {
 
           lastKnownSelectedBusLatLng.latitude = new_camera_lat;
           lastKnownSelectedBusLatLng.longitude = new_camera_lng;
-          // console.log(lastKnownSelectedBusLatLng)
           if (currentSelectedBusPosition === null) {
             currentSelectedBusPosition = emptyGeoPoint;
           }
@@ -80,7 +76,6 @@ function handlesBusesMarkersUpdate(busLocation, map) {
         updateBusesMarkers(map, busLocation);
       }
     } else {
-      console.log("no selected bus");
       updateBusesMarkers(map, busLocation);
     }
   } else {
@@ -91,8 +86,6 @@ function handlesBusesMarkersUpdate(busLocation, map) {
     }
     //TODO: update it javascript
     // markers.remove(MarkerId(busLocation.busId));
-    console.log(busLocation);
-    console.log(window.markers[busLocation.busId]);
     if (window.markers[busLocation.busId] != null) {
       window.markers[busLocation.busId].setMap(null);  
     }
@@ -108,35 +101,13 @@ function updateAvailableBusList() {
   let previousAvailableBuses = availableBuses; 
   availableBuses= [];
   let select_tag = document.querySelector(".bus_selector");
-  // select_tag.innerHTML = ""; 
 
-  // // remove an disapeared bus 
-  // let disapeared;
-  // previousAvailableBuses.forEach((item) => {
-  //    disapeared = true;  
-  //   for (let x = 0; x < availableBuses.length; x++) {
-  //     if (item.busId == availableBuses[x].busId) {
-  //       console.log("didn't disapeared");
-  //       disapeared = false;
-  //     }
-  //     if (disapeared == true) {
-  //       console.log(" disapeared");
-  //       console.log(document.getElementById(item.busId));
-  //       document.getElementById(item.busId).remove();
-  //       markers[item.busId].setMap(null);
-  //       markers[item.busId] = null; 
-  //     }
-  //   }
-  //   console.log("check desapeared");
-  // })
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
-        console.log("this bus is present")
         availableBuses.push(bufferAvailableBuses[e]);
       let wasPresent = false; 
       for (let i = 0; i < previousAvailableBuses.length; i++) {
         if (bufferAvailableBuses[e].busId == previousAvailableBuses[i].busId) {
-          console.log('was already there');
           wasPresent = true;
           if (bufferAvailableBuses[e].busLine != previousAvailableBuses[i].busLine) {
             document.getElementById(bufferAvailableBuses[e].busId).innerHTML = bufferAvailableBuses[e].busId + ": " +bufferAvailableBuses[e].busLine;
@@ -151,7 +122,6 @@ function updateAvailableBusList() {
         option.innerHTML = bufferAvailableBuses[e].busId + ": " +bufferAvailableBuses[e].busLine; 
         option.value = bufferAvailableBuses[e].busId;
         select_tag.appendChild(option); 
-        console.log('was not there ');
       }
     
   }
@@ -164,11 +134,8 @@ function updateAvailableBusList() {
 }
 
 function updateBusesMarkers(map, bus) {
-  console.log("updating the bus markers");
-  console.log("id du bus" + bus.busId);
 
   if (markers[bus.busId] != null) { 
-    console.log("unselected marker move");
     // animateMarker(bus, markers[bus.busId], markers[bus.busId], 10);
     markers[bus.busId].setPosition({lat:bus.latitude, lng: bus.longitude});
   } else {
@@ -236,15 +203,12 @@ function animateSelectedMarker(
 }
 
 function animateMarker (actual, new_position, marker, n) {
-  console.log("moving unselected function")
 	// var lat = actual.lat;
   // var lng = actual.lng;
   // var latlng;
   var lat = new_position.position.lat();
   var lng = new_position.position.lng();
   var latlng = new google.maps.LatLng(lat, lng);
-  console.log(actual);
-  console.log(markers[actual.busId]);
   window.markers[actual.busId].setPosition(latlng);
 
 	// var deltalat = (new_position.latitude - lat) / 100;
@@ -291,7 +255,6 @@ function animateCameraPosition(position) {
 
 
 export function deselectBus() {
-  console.log("bus deselected");
   if (selectedBus != null) {
     markers[selectedBus.busId].setIcon("../img/icons/bus_marker.svg");
     selectedBus = null;
@@ -322,8 +285,6 @@ export function getUserPosition(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (p) {
         userPosition = { lat: p.coords.latitude, lng: p.coords.longitude };
-        console.log("position de l'étudiant")
-        console.log(userPosition);
         window.userPosition = userPosition;
         callback(); 
       }, console.log("the geolocation service failed"));
@@ -349,10 +310,8 @@ export function calculateUserAndBusDistance() {
     var difflat = rlat2-rlat1; // Radian difference (latitudes)
     var difflon = (mk2.lng - mk1.longitude) * (Math.PI/180); // Radian difference (longitudes)
     distanceInMeter = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
-    console.log("ardi's distance: " +distanceInMeter);
     return distanceInMeter;
   } else {
-    console.log("For some reason, we can't calculate your distance to the bus ");
     return false;
   }
 
@@ -364,8 +323,6 @@ export function setSelectedBus(selectedbus) {
   // updateCircle(selectedbus);
     let new_camera_lat = selectedBus.latitude;
     let new_camera_lng = selectedBus.longitude;
-    console.log("show the selected bus")
-    console.log(selectedBus)
     markers[selectedbus.busId].setIcon("../img/icons/selected_bus_marker.svg"); 
     animateCameraPosition({lat: new_camera_lat, lng: new_camera_lng});
   setIsScreenLocked(true);
