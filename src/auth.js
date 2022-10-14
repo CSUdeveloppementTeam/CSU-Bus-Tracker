@@ -1,61 +1,103 @@
 import {
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    sendEmailVerification, signOut, updatePassword
+    sendEmailVerification, signOut, updatePassword, sendPasswordResetEmail
 } from "firebase/auth";
-
-export let userCredentials
-export const signUp = (auth, { email, password }) => {
+import { writeUserInfo } from "./db_repository";
+import {authExceptionHandler} from "../src/AuthExceptionHandler.js"
+import { displayMessage } from "./message_display";
+let userDetails;
+export const signUp = (auth, user) => {
+   const { email, password, name} = user;
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
-            userCredentials = userCredential;
-            console.log("user signed up successfully");
+            userDetails = {
+                "email": userCredential.user.email,
+                "name": name,
+                "creationDate": userCredential.user.metadata.creationTime,
+                "key": userCredential.user.uid,
+              }
+            writeUserInfo(db, userDetails);
+            sendToUserEmailVerificationLink(auth);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
+            const status = authExceptionHandler.handleException(error);
+            const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+            displayMessage(errorMessage);
         });
 }
+
+const sendToUserEmailVerificationLink = (auth) => {
+    sendEmailVerification(auth.currentUser)
+        .then(() => {
+            checkEmailVerification(auth);
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            displayMessage(errorMessage);
+        });
+}
+
+
+export function checkEmailVerification(auth, db) {
+    document.getElementById("auth_message").style.display = 'grid';
+    document.getElementById("auth_tutorial").style.display = "block";
+    setTimeout(function(){
+        document.getElementById('auth_message').scrollIntoView();
+    }, 500);
+    setInterval(function () {
+      if (auth.currentUser.emailVerified) {
+        location.replace("../main_page.html"); 
+      } 
+    }, 2000);
+  }
 
 export const signIn = (auth, { email, password }) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log("user signed in successfully" + user);
+            location.replace("../main_page.html");
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
+            const status = authExceptionHandler.handleException(error);
+            const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+            displayMessage(errorMessage);
         });
 }
 
-
-export const sendToUserEmailVerificationLink = (auth) => {
-    sendEmailVerification(auth.currentUser)
-        .then(() => {
-            console.log('Verifiction email sent');
-        }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
-        });
-}
 
 export function signOutUser(auth) {
     signOut(auth).then(() => {
-        console.log('Signed Out');
+        location.replace('../login.html');
     }).catch((error) => {
-        console.error('Sign Out Error', error);
+        const status = authExceptionHandler.handleException(error);
+        const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+        displayMessage(errorMessage);
     });
 }
 
 export function updateUserPassword(auth, newPassword){
     updatePassword(auth.currentUser, newPassword).then(() => {
-        console.log('Updated')
       }).catch((error) => {
-        console.error('Update Password Error', error);
+        const status = authExceptionHandler.handleException(error);
+        const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+        displayMessage(errorMessage);
       });
+}
+ 
+export function resetPassword(auth, email) {
+    // var actionCodeSettings = {
+    //     url: 'https://csudeveloppementteam.github.io/CSU-Bus-Tracker/',
+    //   };
+    sendPasswordResetEmail(auth, email).then(() => {
+    // Password reset email sent!
+    // ..
+  })
+  .catch((error) => {
+    const status = authExceptionHandler.handleException(error);
+    const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+    displayMessage(errorMessage);
+  });
+    
 }

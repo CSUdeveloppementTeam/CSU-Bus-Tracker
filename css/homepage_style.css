@@ -42,7 +42,10 @@ a:hover {
 .cover_section h1 {
     margin: 20px 15px; 
 }
-
+.value_statement p {
+    width: 80%;
+    margin-bottom: 15px;
+}
 /*second section */ 
 .presentation_block ul, .video_guide {
     padding: 0px; 
@@ -80,7 +83,7 @@ a:hover {
     height: 35vh; 
 }
 .screenshot {
-    height: 45vh; 
+    height: 60vh; 
 }
 .screenshot_vitrine p {
     text-align: center;
@@ -105,7 +108,16 @@ a:hover {
 .header .button.orange {
     margin: 0px; 
 }
-
+.blue {
+    margin-top: 15px;
+    border: 2px solid #DD4A15; 
+    color: #DD4A15;
+    transition: .4s ease-in-out;
+}
+.blue:hover {
+    background-color: #DD4A15;
+    color: white;
+}
 /*ending sections */ 
 .ending_section p {
     text-align: justify;
@@ -207,13 +219,24 @@ h2 {
     .qr_section h2, .qr_section h3, .qr_section p {
         text-align: center !important;
     }
+    .verfication_section {
+        width: 100%;
+    }
+    .pre_explanation {
+        width: 80%;
+    }
     .screenshot_vitrine {
-        display: flex; 
+        display: flex;
+        width: 100% ;
     }
     .screen {
         margin: 30px;
+        width: 32%;
     }
-    .ending_section, .contact_section {
+    .ending_section {
+        width: 100%;
+    }
+    .contact_section {
         width: 80%; 
     }
     .contact_info_block {

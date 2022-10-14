@@ -85,13 +85,67 @@ input[type=text],[type=password],[type=email]{
     height: 50px;
     width: auto;
     max-width: 300px;
-    background-color: blue;
+    background-color: #DD4A15;
     color: white;
     transition: .3s;
     border-radius: 5px;
     border: none;
 }
 .link_button:hover{
-    background-color: orange;
-    color: black;
+    background-color: black;
+    color: white;
+}
+#overlay {
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100vh;
+    width: 100%;  
+    z-index: 99;
+    display: grid;
+    place-items: center;
+}
+#forgotten_form, #popup {
+    background-color: #fff;
+    margin: auto;
+    width: 90%;
+    padding: 40px 10px;
+    /* min-height: 60%;  */
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+#forgotten_form p {
+    width: 80%;
+    margin: 15px auto;
+}
+#forgotten_form input {
+    width: 80%;
+}
+#forgotten_pw {
+    border: none; 
+    background-color: transparent;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+.close_popup {
+    height: 20px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+@media screen and (min-width: 1000px)  {
+    #forgotten_form, #popup {
+        width: 50%;
+    }
+    #forgotten_form p {
+        width: 65%;
+        margin: 15px auto;
+    }
+    #forgotten_form input {
+        width: 65%;
+    }
 }

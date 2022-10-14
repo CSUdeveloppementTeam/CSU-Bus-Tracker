@@ -6,7 +6,13 @@
     <title>Log in Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="css/stylesheet.css">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#DD4A15">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <style>
@@ -19,7 +25,7 @@
     }
 </style>
 <body>   
-    <form class="container_div" method="post" action=" ">
+    <div class="container_div" >
         <img class="appicon" src="img/csu bus tracker.png">
         <h1 >Login</h1>
         <br>
@@ -27,13 +33,13 @@
         <br> 
         <input type="password" placeholder="Password" id="user_password" required>
         <br>
-        <button class="login_button" id="login_btn">Login</button>
+        <button class="login_button" id="login_btn" onclick="login();">Login</button>
         <hr>
-        <a href="#">Forgot Password?</a>
+        <button  id="forgotten_pw" onclick="forgotten()">Forgot Password?</button>
         <br>
         <span>Your don't have an account ? <a href="registration_page.html">Signup</a></span>
 
-    </form>
+    </div>
     <footer>
         <br>
         <select class="language_selector">
@@ -41,6 +47,6 @@
             <option>Turkish</option>
         </select>
     </footer>
-    <script type="text/javascript" src="dist/bundle.js" ></script>
+    <script type="text/javascript" src="dist/bundle.js"></script>
 </body>
 </html>

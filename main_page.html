@@ -8,7 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/stylesheet.css">
         <link rel="stylesheet" href="css/css_for_mainpage.css">
-        <script type="module" src='map/map_init.js'></script>
+        <script type="text/javascript" src="dist/bundle.js" async defer></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#DD4A15">
+        <meta name="msapplication-TileColor" content="#2b5797">
+        <meta name="theme-color" content="#ffffff">
     </head>
     <body>
         <div id="invisible_close_overlay" onclick="open_and_close_navigation_bar()" style="display:none;"></div>
@@ -22,9 +29,7 @@
                     <div></div>
                 </div>
                 <!--Bus Selector-->
-                <select class="bus_selector" placeholder="No bus available">
-                    <option>Bus 1</option>
-                    <option>Bus 2</option>
+                <select class="bus_selector" placeholder="No bus available" onchange="Pressed()">
                 </select>
             </div>
             
@@ -51,22 +56,21 @@
                 <img src="img/icons/bus_icon.png">
                     <span>--</span>
                 <img src="img/icons/person_icon.png">
-                <span>30</span>
-                <span>m</span>
+                <span id="distance_display"></span>
             </button>
 
 
             <div id="floating_side_buttons">
 
-                <button id="show_distance">
+                <button id="show_distance" onclick="updateD()">
                     <img src="img/icons/bus_icon.png">
                     <span>-</span>
                     <img src="img/icons/person_icon.png">
                 </button>
-                <button id="my_location" class="student_location_button">
+                <button id="my_location" class="student_location_button" onclick="showStudentLoc()">
                     <img src="img/icons/my_location_icon.png">
                 </button>
-                <button id="lock_unlock" class="lock">
+                <button id="lock_unlock" class="lock" onclick="lockScreen()">
                     <img src="img/icons/lock_unlock_icon.png">
                 </button>
                
@@ -78,9 +82,9 @@
             <br>
             <br>
             <a href="index.html">Home</a>
-            <a href="https://google.com">Account Detaits </a>
-            <a  id="signOutBtn">Logout</a>
-            <a href="#">Download the App</a>
+            <!-- <a href="https://google.com">Account Detaits </a> -->
+            <button id="signoutbtn"  onclick="logout()">Logout</button>
+            <a href="https://drive.google.com/file/d/1W2rKur2dMeFCVPtouQPpAWvyQciphb_U/view?usp=sharing">Download the App</a>
             <select class="language_selector">
                 <option>English</option>
                 <option>Turkish</option>
@@ -101,14 +105,12 @@
                 document.getElementById("navigation_bar").style.marginLeft = "-390px";
                 document.getElementById('invisible_close_overlay').style.display= "none";
             }
-            else{
+            else{   
                 document.getElementById("navigation_bar").style.marginLeft = "0px";
                 document.getElementById('invisible_close_overlay').style.display= "block";
             }
         }
     </script>
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOrMlBSdtKgDh21esQbkyfcKpKOxaZvt4&callback=initMap">
     </script>
-    <script src="map/lockBtn.js"></script>
 </html>

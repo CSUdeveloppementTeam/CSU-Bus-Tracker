@@ -8,6 +8,13 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/stylesheet.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/css_for_registration_page.css'>
     <script type="text/javascript" src="dist/bundle.js" defer></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#DD4A15">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <style>
@@ -23,7 +30,7 @@
     <!-- signup div
     ======================================================-->
     <div class="signup_container">
-        <form class="signup_container_div" method="post" action="">
+        <div class="signup_container_div" method="post" action="">
                 <img class="appicon" src="img/csu bus tracker.png">
                 <h1 >Sign up for your account</h1>
                 <br>
@@ -33,17 +40,17 @@
                 <br>
                 <input type="password" placeholder="Password" id="user_password" required>
                 <br>
-                <button class="login_button" onclick="" id="signUpBtn">Register</button>
+                <button class="login_button"  id="signUpBtn" onclick="userSignup()">Register</button>
                 <br>
                 <span>already have an account ?<a href="login.html">Login</a></span>
-        </form>
+        </div>
 
 
         <!-- authentication message sent to spam
             go to Outlook.com-->
         <div class="auth_div" id="auth_message">
                 <p style="color: rgb(64, 64, 64)">A confirmation mail has been sent to your email. Check your inbox/spam folder</p>
-                <button class="link_button" onclick=" window.open('http:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
+                <button class="link_button" onclick=" window.open('https:\/\/outlook.com','_blank');signUpUser " >Go to Mail (Outlook.com)</button>
         </div>
     </div>
     <br>
@@ -54,15 +61,16 @@
     <div class="auth_tutorial" id="auth_tutorial">
         <br>
         <h3 style="text-align: center; color: rgb(68, 68, 68)">How to get the Confimation link from your in box</h3>
-        <div>                        
-            <img src="img/auth_tutorial/1_(1).png">
-            <img src="img/auth_tutorial/4_(1).png">
+        <div id="scrollable_div_auth_tutorial">                        
+            <img src="img/auth_tutorial/2.png">
+            <img src="img/auth_tutorial/4.png">
             <img src="img/auth_tutorial/5.png">
+            <img src="img/auth_tutorial/6.png">
             <img src="img/auth_tutorial/7.png">
-            <img src="img/auth_tutorial/8.png">
         </div>
+        <img class="arrow" src="img/icons/arrow.png" onclick="document.getElementById('scrollable_div_auth_tutorial').scrollBy(320, 0);" >
         <br>
-        <button class="link_button" onclick='window.open("https:\/\/outlook.com","_blank")' style="width: 300px; margin:auto; display:block;">Go to Mail (Outlook.com)</button>
+        <button class="link_button" id="check_verf_btn" style="width: 300px; margin:auto; display:block;" onclick="checkVer()">Open the Tracker</button>
     </div> 
 
     <!-- langauge selector
