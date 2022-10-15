@@ -127,6 +127,7 @@ a:hover {
     border: 2px solid white;
     background-color: transparent;
     transition: .4s ease-in-out;
+    margin-left: 0 !important;
 }
 .orange-white:hover {
     border-color: #DD4A15;
