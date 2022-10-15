@@ -162,6 +162,17 @@ h1 {
 h2 {
     font-size: 22px; 
 }
+.step_block {
+    background-color: #020D26;
+    color: white; 
+    font-size: 18;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
         text-align: left;
@@ -265,6 +276,9 @@ h2 {
     p, li {
         font-size: 17px !important;
         line-height: 1.3rem;
+    }
+    .ending_section {
+        width: 80%;
     }
     .qr_section div img{
         height: 40vh; 
