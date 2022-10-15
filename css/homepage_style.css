@@ -3,6 +3,7 @@ body {
     margin: 0; 
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 .contenu { 
     font-family: sans-serif; 
@@ -238,7 +239,8 @@ h2 {
     }
     .screenshot_vitrine {
         display: flex;
-        width: 100% ;
+        width: 95% ;
+        margin: 0px !important;
     }
     .screen {
         margin: 30px;
