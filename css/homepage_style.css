@@ -3,6 +3,7 @@ body {
     margin: 0; 
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 .contenu { 
     font-family: sans-serif; 
@@ -77,7 +78,24 @@ a:hover {
 }
 /*download section */ 
 .download_section {
-    margin: 20px 15px; 
+    margin: 0px; 
+    padding: 20px 0px; 
+    background-color: #020D26;
+    color: white; 
+    width: 100%;
+}
+.code_qr {
+    background-color: white;
+    padding: 15px;
+    margin: 20px; 
+    border-radius: 8px;
+    color: black;
+    text-align: center;
+}
+.direct_dowload_block {
+    width: 80%;
+    margin: 15px; 
+    text-align: center;
 }
 .qr_section div img{
     height: 35vh; 
@@ -105,6 +123,17 @@ a:hover {
     background-color: black;
     color: white; 
 }
+.orange-white {
+    border: 2px solid white;
+    background-color: transparent;
+    transition: .4s ease-in-out;
+    margin-left: 0 !important;
+}
+.orange-white:hover {
+    border-color: #DD4A15;
+    color: #DD4A15; 
+}
+
 .header .button.orange {
     margin: 0px; 
 }
@@ -133,13 +162,25 @@ a:hover {
 }
 /* contact section */ 
 .contact_info_block img {
-    height: 50px; 
-    margin: 15px 15px 0px 15px; 
+    height: 40px; 
+    margin: 0px 15px 0px 15px; 
 
 }
 .contact_info_block p {
     font-weight: bold;
     text-decoration: underline; 
+}
+.contact_info_block div{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
+    margin: 5px;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0px 0px 4px black;
+    border-radius: 3px;
+    width: 100%;
 }
 .header {
     display: flex; 
@@ -161,6 +202,17 @@ h1 {
 }
 h2 {
     font-size: 22px; 
+}
+.step_block {
+    background-color: #020D26;
+    color: white; 
+    font-size: 18;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
 }
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
@@ -209,15 +261,34 @@ h2 {
 
     }
     .main_app_screen img {
-        width: 55%; 
+        width: 75%; 
     }
     .how_to article {
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
     }
-    .qr_section h2, .qr_section h3, .qr_section p {
-        text-align: center !important;
+    .qr_section .direct_dowload_block h2, .qr_section .direct_dowload_block p {
+        text-align: left;
+    }
+    .qr_section {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+    }
+    .direct_download_block {
+        width: 55%;
+        margin-right: 15px;
+    }
+    .direct_dowload_block  {
+        margin-top: 25px; 
+    }
+    .code_qr {
+        width: 40%;
+    }
+    .code_qr h3, .code_qr p{
+        text-align: center;
+
     }
     .verfication_section {
         width: 100%;
@@ -227,7 +298,8 @@ h2 {
     }
     .screenshot_vitrine {
         display: flex;
-        width: 100% ;
+        width: 95% ;
+        margin: 0px !important;
     }
     .screen {
         margin: 30px;
@@ -237,18 +309,23 @@ h2 {
         width: 100%;
     }
     .contact_section {
-        width: 80%; 
+        width: 100%;
+        background: rgb(255,255,255);
+        background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(218,218,218,0.35) 55%, rgba(172,172,172,0.35) 100%);
     }
-    .contact_info_block {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+    .contact_section h2 {
         width: 80%;
-        margin: auto;
+        margin-bottom: 0px;
     }
-    .contact_info_block div {
-        text-align: center;
-        margin: 20px;
+    .contact_section section {
+        margin-bottom: 0;
+        margin-top: 15px;
+        display: flex;
+    }
+    .contact_section article {
+        width: 45%;
+        margin-right: 35px; 
+        margin-bottom: 20px;
     }
     .footer p   {
         text-align: center;
@@ -266,6 +343,9 @@ h2 {
         font-size: 17px !important;
         line-height: 1.3rem;
     }
+    .ending_section {
+        width: 80%;
+    }
     .qr_section div img{
         height: 40vh; 
     }
@@ -273,5 +353,3 @@ h2 {
         height: 65vh; 
     }
 }
-
-

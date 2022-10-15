@@ -40,14 +40,12 @@ const sendToUserEmailVerificationLink = (auth) => {
 
 
 export function checkEmailVerification(auth, db) {
-    document.getElementById("auth_message").style.display = 'grid';
-    document.getElementById("auth_tutorial").style.display = "block";
     setTimeout(function(){
         document.getElementById('auth_message').scrollIntoView();
     }, 500);
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
-        location.replace("../main_page.html"); 
+        location.replace("/main_page.html"); 
       } 
     }, 2000);
   }

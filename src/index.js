@@ -34,7 +34,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     getUserInfo(db, user.uid);
     var fileName = location.href.split("/").pop();
-    if(fileName !== "main_page.html"){
+    if(fileName !== "/main_page.html"){
       // location.replace("../main_page.html");
       checkEmailVerification(auth);
     } else {
@@ -45,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
     var fileName = location.href.split("/").pop();
     if(wasAlreadyConnected){
       if(fileName !== "index.html"){
-        location.replace("../index.html");
+        location.replace("/index.html");
       }
     }
   }
