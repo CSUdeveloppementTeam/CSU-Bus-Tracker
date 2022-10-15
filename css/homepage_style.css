@@ -83,7 +83,7 @@ a:hover {
     height: 35vh; 
 }
 .screenshot {
-    height: 45vh; 
+    height: 60vh; 
 }
 .screenshot_vitrine p {
     text-align: center;
@@ -219,13 +219,24 @@ h2 {
     .qr_section h2, .qr_section h3, .qr_section p {
         text-align: center !important;
     }
+    .verfication_section {
+        width: 100%;
+    }
+    .pre_explanation {
+        width: 80%;
+    }
     .screenshot_vitrine {
-        display: flex; 
+        display: flex;
+        width: 100% ;
     }
     .screen {
         margin: 30px;
+        width: 32%;
     }
-    .ending_section, .contact_section {
+    .ending_section {
+        width: 100%;
+    }
+    .contact_section {
         width: 80%; 
     }
     .contact_info_block {

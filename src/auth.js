@@ -3,7 +3,8 @@ import {
     sendEmailVerification, signOut, updatePassword, sendPasswordResetEmail
 } from "firebase/auth";
 import { writeUserInfo } from "./db_repository";
-
+import {authExceptionHandler} from "../src/AuthExceptionHandler.js"
+import { displayMessage } from "./message_display";
 let userDetails;
 export const signUp = (auth, user) => {
    const { email, password, name} = user;
@@ -17,25 +18,23 @@ export const signUp = (auth, user) => {
                 "key": userCredential.user.uid,
               }
             writeUserInfo(db, userDetails);
-            console.log("user signed up successfully");
             sendToUserEmailVerificationLink(auth);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
+            const status = authExceptionHandler.handleException(error);
+            const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+            displayMessage(errorMessage);
         });
 }
 
 const sendToUserEmailVerificationLink = (auth) => {
     sendEmailVerification(auth.currentUser)
         .then(() => {
-            console.log('Verifiction email sent');
             checkEmailVerification(auth);
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
+            displayMessage(errorMessage);
         });
 }
 
@@ -56,31 +55,32 @@ export const signIn = (auth, { email, password }) => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log("user signed in successfully" + user);
-            location.replace("/main_page.html");
+            location.replace("../main_page.html");
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(`errorCode: ${errorCode}, errorMessage: ${errorMessage}`);
+            const status = authExceptionHandler.handleException(error);
+            const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+            displayMessage(errorMessage);
         });
 }
 
 
 export function signOutUser(auth) {
     signOut(auth).then(() => {
-        console.log('Signed Out');
-        location.replace('/login.html');
+        location.replace('../login.html');
     }).catch((error) => {
-        console.error('Sign Out Error', error);
+        const status = authExceptionHandler.handleException(error);
+        const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+        displayMessage(errorMessage);
     });
 }
 
 export function updateUserPassword(auth, newPassword){
     updatePassword(auth.currentUser, newPassword).then(() => {
-        console.log('Updated')
       }).catch((error) => {
-        console.error('Update Password Error', error);
+        const status = authExceptionHandler.handleException(error);
+        const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+        displayMessage(errorMessage);
       });
 }
  
@@ -91,13 +91,11 @@ export function resetPassword(auth, email) {
     sendPasswordResetEmail(auth, email).then(() => {
     // Password reset email sent!
     // ..
-    console.log("the email has been sent succesfully !");
   })
   .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-    console.log(errorMessage, errorCode);
+    const status = authExceptionHandler.handleException(error);
+    const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+    displayMessage(errorMessage);
   });
     
 }

@@ -32,7 +32,6 @@ let wasAlreadyConnected = false;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log(`connected user: ${user.email}`);
     getUserInfo(db, user.uid);
     var fileName = location.href.split("/").pop();
     if(fileName !== "/main_page.html"){
@@ -43,9 +42,7 @@ onAuthStateChanged(auth, (user) => {
     }
     wasAlreadyConnected = true;
   } else {
-    console.log(`Not connected user`);
     var fileName = location.href.split("/").pop();
-    console.log("file: "+fileName);
     if(wasAlreadyConnected){
       if(fileName !== "index.html"){
         location.replace("/index.html");
@@ -65,9 +62,6 @@ function userSignup () {
     "name": document.getElementById("username").value
   }
   signUp(auth, user);
-  console.log("signed the user up");
-  document.getElementById("auth_message").style.display = 'grid';
-  document.getElementById("auth_tutorial").style.display = "block";
 }
 window.userSignup = userSignup; 
 
@@ -75,24 +69,17 @@ window.userSignup = userSignup;
 
 // logout
 function logout () {
-  console.log("logout trial");
   signOutUser(auth);
 }
 window.logout = logout; 
 
 //login 
 function login () {
-
-  console.log("connexion trial");
   const user = {
     "email": document.getElementById("user_email").value,
     "password": document.getElementById("user_password").value,
   }
-  let result = signIn(auth, user);
-  console.log(result); 
-  if (result.isError == true) {
-    alert(result.errorMessage);
-  }
+  signIn(auth, user);
 }
 window.login = login; 
 
@@ -103,9 +90,9 @@ function forgotten() {
 
   const form = document.createElement('div');
   form.id = "forgotten_form";
-  form.innerHTML = "<img src='../images/close_pop.png' class='close_popup' ><h1>Forgotten Password</h1><p>Enter your account email adress, an email will be sent to you with the link to reset your password.</p><input type='email' id='email_reset' placeholder='Your account Email' required><br><br><button class='login_button' id='reset_btn' >Reset Password</button>" 
+  form.innerHTML = "<img src='../img/icons/close_pop.png' class='close_popup' ><h1>Forgotten Password</h1><p>Enter your account email adress, an email will be sent to you with the link to reset your password.</p><input type='email' id='email_reset' placeholder='Your account Email' required><br><br><button class='login_button' id='reset_btn' >Reset Password</button>" 
   overlay.appendChild(form); 
-  document.querySelector("body").appendChild(overlay); 
+  document.querySelector("body").prepend(overlay); 
 
   document.querySelector(".close_popup").addEventListener('click', function () {
     overlay.remove();
@@ -142,13 +129,11 @@ window.showStudentLoc = showStudentLoc;
 // bus to user distance 
 
 function updateD() {
-  console.log('Calculate the distance')
   let distance;
   if (window.hasOwnProperty('selectedBus')) {
     if (window.selectedBus != null) {
       getUserPosition(function () {
         distance = Math.round(calculateUserAndBusDistance());
-        console.log("distance in meter = " + distance);
         if (distance == false) {
           document.getElementById("distance_display").innerHTML = ""; 
         } else {
