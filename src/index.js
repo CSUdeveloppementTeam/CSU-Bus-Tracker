@@ -54,6 +54,8 @@ function checkVer() {
   checkEmailVerification(auth);
 }
 window.checkVer = checkVer;
+
+// user sign up 
 function userSignup () {
   const user = {
     "email": document.getElementById("user_email").value,
@@ -63,7 +65,6 @@ function userSignup () {
   signUp(auth, user);
 }
 window.userSignup = userSignup; 
-
 
 
 // logout

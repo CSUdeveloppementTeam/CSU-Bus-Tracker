@@ -35,6 +35,8 @@ export const signUp = (auth, user) => {
 const sendToUserEmailVerificationLink = (auth) => {
     sendEmailVerification(auth.currentUser)
         .then(() => {
+            document.getElementById("auth_message").style.display = 'grid';
+            document.getElementById("auth_tutorial").style.display = "block";
             checkEmailVerification(auth);
         }).catch((error) => {
             const errorCode = error.code;
@@ -50,7 +52,7 @@ export function checkEmailVerification(auth, db) {
     }, 500);
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
-        location.replace("/main_page.html"); 
+        location.replace("../main_page.html"); 
       } 
     }, 2000);
   }
