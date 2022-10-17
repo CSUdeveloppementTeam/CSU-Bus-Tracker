@@ -43,7 +43,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     var fileName = location.href.split("/").pop();
     if(wasAlreadyConnected){
-      if(fileName !== "main_page.html"){
+      if(fileName !== "main_page.html") {
         location.replace("main_page.html");
       }
     }
@@ -74,7 +74,6 @@ window.logout = logout;
 
 //login 
 function login () {
-  if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
     const user = {
       "email": document.getElementById("user_email").value,
       "password": document.getElementById("user_password").value,
