@@ -34,8 +34,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     getUserInfo(db, user.uid);
     var fileName = location.href.split("/").pop();
-    if(fileName !== "/main_page.html"){
-      // location.replace("../main_page.html");
+    if(fileName !== "main_page.html"){
       checkEmailVerification(auth);
     } else {
       busLocations(db, window.mapObj);
@@ -44,8 +43,8 @@ onAuthStateChanged(auth, (user) => {
   } else {
     var fileName = location.href.split("/").pop();
     if(wasAlreadyConnected){
-      if(fileName !== "index.html"){
-        location.replace("/index.html");
+      if(fileName !== "main_page.html"){
+        location.replace("main_page.html");
       }
     }
   }
@@ -75,11 +74,12 @@ window.logout = logout;
 
 //login 
 function login () {
-  const user = {
-    "email": document.getElementById("user_email").value,
-    "password": document.getElementById("user_password").value,
-  }
-  signIn(auth, user);
+  if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
+    const user = {
+      "email": document.getElementById("user_email").value,
+      "password": document.getElementById("user_password").value,
+    }
+    signIn(auth, user);
 }
 window.login = login; 
 

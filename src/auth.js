@@ -8,23 +8,28 @@ import { displayMessage } from "./message_display";
 let userDetails;
 export const signUp = (auth, user) => {
    const { email, password, name} = user;
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            userDetails = {
-                "email": userCredential.user.email,
-                "name": name,
-                "creationDate": userCredential.user.metadata.creationTime,
-                "key": userCredential.user.uid,
-              }
-            writeUserInfo(db, userDetails);
-            sendToUserEmailVerificationLink(auth);
-        })
-        .catch((error) => {
-            const status = authExceptionHandler.handleException(error);
-            const errorMessage = authExceptionHandler.generateExceptionMessage(status);
-            displayMessage(errorMessage);
-        });
+   const mailEnd = email.split("@").pop();
+    if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                userDetails = {
+                    "email": userCredential.user.email,
+                    "name": name,
+                    "creationDate": userCredential.user.metadata.creationTime,
+                    "key": userCredential.user.uid,
+                }
+                writeUserInfo(db, userDetails);
+                sendToUserEmailVerificationLink(auth);
+            })
+            .catch((error) => {
+                const status = authExceptionHandler.handleException(error);
+                const errorMessage = authExceptionHandler.generateExceptionMessage(status);
+                displayMessage(errorMessage);
+            });
+        } else {
+            displayMessage("Sorry the email you entered is not a CSU student email");
+        }
 }
 
 const sendToUserEmailVerificationLink = (auth) => {
@@ -51,7 +56,9 @@ export function checkEmailVerification(auth, db) {
   }
 
 export const signIn = (auth, { email, password }) => {
-    signInWithEmailAndPassword(auth, email, password)
+    const mailEnd = email.split("@").pop();
+    if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
+        signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
@@ -62,6 +69,9 @@ export const signIn = (auth, { email, password }) => {
             const errorMessage = authExceptionHandler.generateExceptionMessage(status);
             displayMessage(errorMessage);
         });
+    } else {
+        displayMessage("Sorry the email you entered is not a CSU student email");
+    }
 }
 
 
