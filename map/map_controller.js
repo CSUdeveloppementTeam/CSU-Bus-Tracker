@@ -178,12 +178,14 @@ function animateSelectedMarker(
       }
       markers[selectedBus.busId].setPosition(new google.maps.LatLng(newBusLocation.latitude, newBusLocation.longitude));
       //update the distance
-      let distance = Math.round(calculateUserAndBusDistance());
-      if (distance == false) {
-        document.getElementById("distance_display").innerHTML = ""; 
-      } else {
-      document.getElementById("distance_display").innerHTML = distance + "m"; 
-      } 
+      if (window.userPosition != null || typeof window.userPosition  != "undefined") {
+        let distance = Math.round(calculateUserAndBusDistance());
+        if (distance == false) {
+          document.getElementById("distance_display").innerHTML = ""; 
+        } else {
+        document.getElementById("distance_display").innerHTML = distance + "m"; 
+        } 
+      }
       // var deltalat = (newBusLocation.latitude - lat) / 100;
       // var deltalng = (newBusLocation.longitude - lng) / 100;
 
