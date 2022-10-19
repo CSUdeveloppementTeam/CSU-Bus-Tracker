@@ -177,6 +177,13 @@ function animateSelectedMarker(
         makeInfowindow(map, markers[selectedBus.busId], selectedBus.busId, selectedBus.busLine);
       }
       markers[selectedBus.busId].setPosition(new google.maps.LatLng(newBusLocation.latitude, newBusLocation.longitude));
+      //update the distance
+      let distance = Math.round(calculateUserAndBusDistance());
+      if (distance == false) {
+        document.getElementById("distance_display").innerHTML = ""; 
+      } else {
+      document.getElementById("distance_display").innerHTML = distance + "m"; 
+      } 
       // var deltalat = (newBusLocation.latitude - lat) / 100;
       // var deltalng = (newBusLocation.longitude - lng) / 100;
 
@@ -287,7 +294,7 @@ export function getUserPosition(callback) {
         userPosition = { lat: p.coords.latitude, lng: p.coords.longitude };
         window.userPosition = userPosition;
         callback(); 
-      }, console.log("the geolocation service failed"));
+      });
     } else {
       console.log("No geolocation available");
     }

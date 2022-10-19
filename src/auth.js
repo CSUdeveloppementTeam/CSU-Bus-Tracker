@@ -21,6 +21,9 @@ export const signUp = (auth, user) => {
                 }
                 writeUserInfo(db, userDetails);
                 sendToUserEmailVerificationLink(auth);
+                setTimeout(function(){
+                    document.getElementById('auth_message').scrollIntoView();
+                }, 500);
             })
             .catch((error) => {
                 const status = authExceptionHandler.handleException(error);
@@ -47,13 +50,12 @@ const sendToUserEmailVerificationLink = (auth) => {
 
 
 export function checkEmailVerification(auth, db) {
-    setTimeout(function(){
-        document.getElementById('auth_message').scrollIntoView();
-    }, 500);
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
         location.replace("../main_page.html"); 
-      } 
+      } else {
+        displayMessage("Sorry, your email adress is not verified. <br> Please, access you email Inbox (through outlook.com) and click on verification link.");
+      }
     }, 2000);
   }
 
@@ -64,7 +66,7 @@ export const signIn = (auth, { email, password }) => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            location.replace("../main_page.html");
+            checkEmailVerification(auth);
         })
         .catch((error) => {
             const status = authExceptionHandler.handleException(error);
