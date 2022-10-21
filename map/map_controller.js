@@ -271,6 +271,7 @@ export function deselectBus() {
     if (isScreenLocked == true) {
       setIsScreenLocked(false);
     }
+    document.getElementById("distance_display").innerHTML = "";
   //   currentSelectedBusPosition = null;
   //   lastKnownSelectedBusLatLng = null;
     // distanceInMeter = null;
