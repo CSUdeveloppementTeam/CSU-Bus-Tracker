@@ -62,7 +62,7 @@ function userSignup () {
     "password": document.getElementById("user_password").value,
     "name": document.getElementById("username").value
   }
-  signUp(auth, user);
+  signUp(auth, user, db);
 }
 window.userSignup = userSignup; 
 

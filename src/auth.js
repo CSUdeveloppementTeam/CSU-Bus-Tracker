@@ -6,7 +6,7 @@ import { writeUserInfo } from "./db_repository";
 import {authExceptionHandler} from "../src/AuthExceptionHandler.js"
 import { displayMessage } from "./message_display";
 let userDetails;
-export const signUp = (auth, user) => {
+export const signUp = (auth, user, db) => {
    const { email, password, name} = user;
    const mailEnd = email.split("@").pop();
     if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
@@ -49,7 +49,7 @@ const sendToUserEmailVerificationLink = (auth) => {
 }
 
 
-export function checkEmailVerification(auth, db) {
+export function checkEmailVerification(auth) {
     setInterval(function () {
       if (auth.currentUser.emailVerified) {
         location.replace("../main_page.html"); 
