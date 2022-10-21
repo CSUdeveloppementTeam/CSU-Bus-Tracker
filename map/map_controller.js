@@ -280,13 +280,19 @@ export function deselectBus() {
 export  function setIsScreenLocked(value) {
   isScreenLocked = value;
   window.mapLockStat = isScreenLocked; 
+  const lock_icon = document.querySelector('#lock_unlock img');
+  const lock_btn = document.querySelector('#lock_unlock');
   if (!value) {
     document.querySelector(".lock_panel").remove();
     deselectBus(); 
+    lock_btn.classList.remove("active"); 
+    lock_icon.src = "img/icons/lock_unlock_icon.png";
   } else {
-      let lockPanel = document.createElement("div");
-      lockPanel.classList.add("lock_panel");
-      document.getElementById("map").prepend(lockPanel);
+    let lockPanel = document.createElement("div");
+    lockPanel.classList.add("lock_panel");
+    document.getElementById("map").prepend(lockPanel);
+    lock_icon.src = "img/icons/lock_icon.png";
+      lock_btn.classList.add("active"); 
   }
 }
 

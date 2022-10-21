@@ -151,17 +151,17 @@ body{
         padding:15px;
 
     }
-        #user_distance_button{
-            float:right;
-            margin:25px;
-            padding: 15px 25px;
-            
-        }
+    #user_distance_button{
+        float:right;
+        margin:25px;
+        padding: 15px 25px;
+        
+    }
     #show_distance:hover, #user_distance_button:hover{
         transition:.3s;
         background: rgb(255, 190, 70);
     }
-    #my_locaiton:hover, #lock_unlock:hover{
+    #my_locaiton:hover, #lock_unlock:hover, #lock_unlock.active {
         transition:.3s;
         background: rgb(52, 52, 52);
     }

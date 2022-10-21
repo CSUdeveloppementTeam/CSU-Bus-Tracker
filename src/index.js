@@ -107,7 +107,7 @@ window.forgotten = forgotten;
 // Lock Screen button 
 window.mapLockStat = false; 
 function lockScreen () {
-    if (window.mapLockStat == true) {
+      if (window.mapLockStat == true) {
         setIsScreenLocked(false); 
         window.mapLockStat = false;
     } else {
