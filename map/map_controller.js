@@ -104,7 +104,7 @@ function updateAvailableBusList() {
 
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
-        availableBuses.push(bufferAvailableBuses[e]);
+      availableBuses.push(bufferAvailableBuses[e]);
       let wasPresent = false; 
       for (let i = 0; i < previousAvailableBuses.length; i++) {
         if (bufferAvailableBuses[e].busId == previousAvailableBuses[i].busId) {
@@ -123,7 +123,7 @@ function updateAvailableBusList() {
         option.value = bufferAvailableBuses[e].busId;
         select_tag.appendChild(option); 
       }
-    
+      updateTopBarMsg();
   }
   
   if (selectedBus == null) {
@@ -262,7 +262,6 @@ function animateCameraPosition(position) {
 
 
 
-
 export function deselectBus() {
   if (selectedBus != null) {
     markers[selectedBus.busId].setIcon("../img/icons/bus_marker.svg");
@@ -272,6 +271,7 @@ export function deselectBus() {
       setIsScreenLocked(false);
     }
     document.getElementById("distance_display").innerHTML = "";
+    updateTopBarMsg();
   //   currentSelectedBusPosition = null;
   //   lastKnownSelectedBusLatLng = null;
     // distanceInMeter = null;
@@ -357,3 +357,13 @@ export function setInitialBusesMarkers(map) {
 
 }
 window.markers = markers; 
+
+export function updateTopBarMsg () {
+  if (markers !=  null || typeof markers != "undefined") {
+    if (selectedBus == null || typeof selectedBus == "undefined") {
+      document.querySelector('.top-bar-message').innerHTML = "Choose a bus"; 
+    } 
+  } else {
+    document.querySelector('.top-bar-message').innerHTML = "No bus available";
+  }
+}

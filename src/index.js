@@ -149,7 +149,6 @@ function updateD() {
 }
 window.updateD = updateD; 
 
-
 // set the selected bus 
 function select() {
   
