@@ -365,6 +365,7 @@ export function updateTopBarMsg () {
       document.querySelector(".bus_selector").value = "msg"; 
     } 
   } else {
+    console.log("there is a bus"); 
     document.querySelector('.top-bar-message').innerHTML = "No bus available";
     document.querySelector(".bus_selector").value = "msg";
   }
