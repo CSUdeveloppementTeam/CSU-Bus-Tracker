@@ -266,7 +266,7 @@ export function deselectBus() {
   if (selectedBus != null) {
     markers[selectedBus.busId].setIcon("../img/icons/bus_marker.svg");
     selectedBus = null;
-    document.querySelector(".bus_selector").value = null; 
+    document.querySelector(".bus_selector").value = "msg"; 
     if (isScreenLocked == true) {
       setIsScreenLocked(false);
     }
@@ -366,7 +366,7 @@ export function updateTopBarMsg () {
       document.querySelector(".bus_selector").value = "msg"; 
     } 
   } else {
-    console.log("there is a bus"); 
+    console.log("there is a no bus"); 
     document.querySelector('.top-bar-message').innerHTML = "No bus available";
     document.querySelector(".bus_selector").value = "msg";
   }
