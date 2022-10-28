@@ -214,6 +214,10 @@ h2 {
     display: grid;
     place-items: center;
 }
+.video_block iframe {
+    width: 350;
+    height: 197; 
+}
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
         text-align: left;
@@ -351,5 +355,9 @@ h2 {
     }
     .screenshot {
         height: 65vh; 
+    }
+    .video_block iframe {
+        width: 560;
+        height: 315; 
     }
 }
