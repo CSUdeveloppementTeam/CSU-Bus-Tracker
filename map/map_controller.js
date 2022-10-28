@@ -360,6 +360,7 @@ window.markers = markers;
 
 export function updateTopBarMsg () {
   if (markers !=  null || typeof markers != "undefined") {
+    console.log("there is a bus"); 
     if (selectedBus == null || typeof selectedBus == "undefined") {
       document.querySelector('.top-bar-message').innerHTML = "Choose a bus"; 
       document.querySelector(".bus_selector").value = "msg"; 
