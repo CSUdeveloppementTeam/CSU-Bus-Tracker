@@ -23,7 +23,7 @@ export function busLocations(db, map) {
   onValue(ref(db, 'busLocations'), (snapshot) => {
     var loc = snapshot.val();
     if (loc != null && typeof loc !== undefined) {
-      handleBusLocations(loc, map);  
+      handleBusLocations(loc, map); 
     }
   },
     (error)=>{
