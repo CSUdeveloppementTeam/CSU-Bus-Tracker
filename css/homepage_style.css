@@ -215,8 +215,8 @@ h2 {
     place-items: center;
 }
 .video_block iframe {
-    width: 350;
-    height: 197; 
+    width: 350 !important;
+    height: 197 !important; 
 }
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
