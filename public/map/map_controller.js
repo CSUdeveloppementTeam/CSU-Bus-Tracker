@@ -23,7 +23,7 @@ export function busLocations(db, map) {
   onValue(ref(db, 'busLocations'), (snapshot) => {
     var loc = snapshot.val();
     if (loc != null && typeof loc !== undefined) {
-      handleBusLocations(loc, map);  
+      handleBusLocations(loc, map); 
     }
   },
     (error)=>{
@@ -104,7 +104,7 @@ function updateAvailableBusList() {
 
   // update and add bus 
   for (let e = 0; e < bufferAvailableBuses.length; e++) {
-        availableBuses.push(bufferAvailableBuses[e]);
+      availableBuses.push(bufferAvailableBuses[e]);
       let wasPresent = false; 
       for (let i = 0; i < previousAvailableBuses.length; i++) {
         if (bufferAvailableBuses[e].busId == previousAvailableBuses[i].busId) {
@@ -123,7 +123,7 @@ function updateAvailableBusList() {
         option.value = bufferAvailableBuses[e].busId;
         select_tag.appendChild(option); 
       }
-    
+      updateTopBarMsg();
   }
   
   if (selectedBus == null) {
@@ -177,6 +177,15 @@ function animateSelectedMarker(
         makeInfowindow(map, markers[selectedBus.busId], selectedBus.busId, selectedBus.busLine);
       }
       markers[selectedBus.busId].setPosition(new google.maps.LatLng(newBusLocation.latitude, newBusLocation.longitude));
+      //update the distance
+      if (window.userPosition != null || typeof window.userPosition  != "undefined") {
+        let distance = Math.round(calculateUserAndBusDistance());
+        if (distance == false) {
+          document.getElementById("distance_display").innerHTML = ""; 
+        } else {
+        document.getElementById("distance_display").innerHTML = distance + "m"; 
+        } 
+      }
       // var deltalat = (newBusLocation.latitude - lat) / 100;
       // var deltalng = (newBusLocation.longitude - lng) / 100;
 
@@ -253,15 +262,16 @@ function animateCameraPosition(position) {
 
 
 
-
 export function deselectBus() {
   if (selectedBus != null) {
     markers[selectedBus.busId].setIcon("../img/icons/bus_marker.svg");
     selectedBus = null;
-    document.querySelector(".bus_selector").value = null; 
+    document.querySelector(".bus_selector").value = "msg"; 
     if (isScreenLocked == true) {
       setIsScreenLocked(false);
     }
+    document.getElementById("distance_display").innerHTML = "";
+    updateTopBarMsg();
   //   currentSelectedBusPosition = null;
   //   lastKnownSelectedBusLatLng = null;
     // distanceInMeter = null;
@@ -271,13 +281,19 @@ export function deselectBus() {
 export  function setIsScreenLocked(value) {
   isScreenLocked = value;
   window.mapLockStat = isScreenLocked; 
+  const lock_icon = document.querySelector('#lock_unlock img');
+  const lock_btn = document.querySelector('#lock_unlock');
   if (!value) {
     document.querySelector(".lock_panel").remove();
     deselectBus(); 
+    lock_btn.classList.remove("active"); 
+    lock_icon.src = "img/icons/lock_unlock_icon.png";
   } else {
-      let lockPanel = document.createElement("div");
-      lockPanel.classList.add("lock_panel");
-      document.getElementById("map").prepend(lockPanel);
+    let lockPanel = document.createElement("div");
+    lockPanel.classList.add("lock_panel");
+    document.getElementById("map").prepend(lockPanel);
+    lock_icon.src = "img/icons/lock_icon.png";
+      lock_btn.classList.add("active"); 
   }
 }
 
@@ -287,7 +303,7 @@ export function getUserPosition(callback) {
         userPosition = { lat: p.coords.latitude, lng: p.coords.longitude };
         window.userPosition = userPosition;
         callback(); 
-      }, console.log("the geolocation service failed"));
+      });
     } else {
       console.log("No geolocation available");
     }
@@ -341,3 +357,17 @@ export function setInitialBusesMarkers(map) {
 
 }
 window.markers = markers; 
+
+export function updateTopBarMsg () {
+  if (markers !=  null || typeof markers != "undefined") {
+    console.log("there is a bus"); 
+    if (selectedBus == null || typeof selectedBus == "undefined") {
+      document.querySelector('.top-bar-message').innerHTML = "Choose a bus"; 
+      document.querySelector(".bus_selector").value = "msg"; 
+    } 
+  } else {
+    console.log("there is a no bus"); 
+    document.querySelector('.top-bar-message').innerHTML = "No bus available";
+    document.querySelector(".bus_selector").value = "msg";
+  }
+}

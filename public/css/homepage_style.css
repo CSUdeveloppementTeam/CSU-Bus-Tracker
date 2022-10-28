@@ -65,9 +65,13 @@ a:hover {
     display: flex; 
     flex-direction: column; 
 }
-.video_block video {
+/* .video_block video {
     width: 100%; 
     background-color: grey;
+    height: 45vh;
+} */
+.video_block {
+    width: 100%;
     height: 45vh;
 }
 .video_guide {
@@ -214,6 +218,10 @@ h2 {
     display: grid;
     place-items: center;
 }
+.video_block iframe {
+    width: inherit !important;
+    height: inherit !important; 
+}
 @media screen and (min-width: 1000px)  {
     h1, H2, H3, li, p {
         text-align: left;
@@ -351,5 +359,9 @@ h2 {
     }
     .screenshot {
         height: 65vh; 
+    }
+    .video_block iframe {
+        width: 560;
+        height: 315; 
     }
 }

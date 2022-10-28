@@ -1,10 +1,10 @@
 {
   "name": "csu-bus-tracker-web",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Csu web app for tracking csu buses",
   "main": "index.js",
   "keywords": [],
-  "author": "",
+  "author": "Csu development team",
   "license": "ISC",
   "devDependencies": {
     "webpack": "^5.74.0",
@@ -12,9 +12,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=development"
+    "build": "webpack --mode=production"
   },
   "dependencies": {
     "firebase": "^9.10.0"
+  },
+  "hosting": {
+    "public": "public"
   }
 }
