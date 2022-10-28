@@ -362,8 +362,10 @@ export function updateTopBarMsg () {
   if (markers !=  null || typeof markers != "undefined") {
     if (selectedBus == null || typeof selectedBus == "undefined") {
       document.querySelector('.top-bar-message').innerHTML = "Choose a bus"; 
+      document.querySelector(".bus_selector").value = "msg"; 
     } 
   } else {
     document.querySelector('.top-bar-message').innerHTML = "No bus available";
+    document.querySelector(".bus_selector").value = "msg";
   }
 }
