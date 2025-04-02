@@ -1,17 +1,18 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { deleteUser, getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserInfo} from "./db_repository.js";
 import { getDatabase} from "firebase/database";
 import { signIn, signOutUser, signUp, resetPassword, checkEmailVerification } from "./auth.js";
 import { busLocations, setIsScreenLocked, getUserPosition, calculateUserAndBusDistance, setSelectedBus, displayUserPosition, deselectBus} from "../map/map_controller.js";
 import { initMap } from "../map/map_init.js";
+import CONFIG from "../../config.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBgL1VUP0JLRMTXFKL19WaSi7aj9BPP-HU",
+  apiKey: CONFIG.API_KEY,
   authDomain: "csu-bus-tracker.firebaseapp.com",
   databaseURL: "https://csu-bus-tracker-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "csu-bus-tracker",
@@ -75,6 +76,7 @@ window.logout = logout;
 
 //login 
 function login () {
+  console.log("login clicked")
     const user = {
       "email": document.getElementById("user_email").value,
       "password": document.getElementById("user_password").value,
