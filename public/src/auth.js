@@ -61,7 +61,7 @@ export function checkEmailVerification(auth) {
 
 export const signIn = (auth, { email, password }) => {
     const mailEnd = email.split("@").pop();
-    if (mailEnd == "stu.csu.edu.tr" || mailEnd == "csu.edu.tr") {
+    if (mailEnd == "stu.cau.edu.tr" || mailEnd == "cau.edu.tr") {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
@@ -74,7 +74,7 @@ export const signIn = (auth, { email, password }) => {
             displayMessage(errorMessage);
         });
     } else {
-        displayMessage("Sorry the email you entered is not a CSU student email");
+        displayMessage("Sorry the email you entered is not a CAU student email");
     }
 }
 
