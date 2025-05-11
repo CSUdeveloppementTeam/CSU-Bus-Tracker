@@ -171,5 +171,3 @@ window.Pressed = select;
 // map 
 window.initMap = initMap; 
 
-
-
